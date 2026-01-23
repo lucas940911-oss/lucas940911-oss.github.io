@@ -1,4 +1,4 @@
-/* 全域設定 */
+/* --- 全域設定 Global Settings --- */
 :root {
   --primary-color: #00e0ff; /* 霓虹青 */
   --bg-dark: #000000;
@@ -16,7 +16,7 @@ body {
   line-height: 1.6;
 }
 
-/* 頂部導覽列 Navbar */
+/* --- 頂部導覽列 Navbar --- */
 .navbar {
   position: sticky;
   top: 0;
@@ -38,10 +38,12 @@ body {
 
 .nav-logo {
   font-family: Impact, sans-serif;
-  font-size: 1.5rem;
+  font-size: 1.8rem;
   color: var(--primary-color);
   text-decoration: none;
-  letter-spacing: 1px;
+  border: 2px solid var(--primary-color);
+  padding: 0 10px;
+  line-height: 1;
 }
 
 .nav-links {
@@ -61,10 +63,15 @@ body {
   color: var(--primary-color);
 }
 
-/* Hero 區塊 */
+/* --- 英雄區塊 Hero --- */
 .hero {
-  display: flex; flex-direction: column; justify-content: center; align-items: center;
-  height: 80vh; text-align: center; padding: 0 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
+  text-align: center;
+  padding: 0 20px;
 }
 
 .logo {
@@ -83,7 +90,7 @@ body {
   letter-spacing: 2px;
 }
 
-/* 按鈕樣式 */
+/* --- 按鈕樣式 Buttons --- */
 .btn-hero, .btn {
   padding: 12px 30px;
   background: transparent;
@@ -102,7 +109,7 @@ body {
   box-shadow: 0 0 20px rgba(0, 224, 255, 0.5);
 }
 
-/* 網格佈局 (歌曲與商品) */
+/* --- 網格佈局 Grid --- */
 .container {
   max-width: 1000px;
   margin: 0 auto;
@@ -143,7 +150,7 @@ body {
   margin-bottom: 20px;
 }
 
-/* 表單區塊 */
+/* --- 表單區塊 Form --- */
 .suggestion { background: #080808; padding: 100px 20px; }
 .form-card {
   background: #111;
@@ -155,20 +162,31 @@ body {
 }
 
 .input, .textarea {
-  width: 100%; background: #1a1a1a; color: #fff; border: 1px solid #333;
-  border-radius: 8px; padding: 12px; margin-top: 5px; margin-bottom: 20px;
+  width: 100%;
+  background: #1a1a1a;
+  color: #fff;
+  border: 1px solid #333;
+  border-radius: 8px;
+  padding: 12px;
+  margin-top: 5px;
+  margin-bottom: 20px;
   box-sizing: border-box;
 }
 
 .btn-submit {
-  width: 100%; padding: 15px; background: var(--primary-color);
-  border: none; border-radius: 8px; font-weight: bold; cursor: pointer;
+  width: 100%;
+  padding: 15px;
+  background: var(--primary-color);
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
 }
 
-/* --- 高級感 Footer 設計 --- */
+/* --- 重新設計的精簡頁尾 Footer --- */
 .footer {
-  background: #050505; /* 比背景再深一點的黑 */
-  padding: 80px 20px 40px;
+  background: #050505;
+  padding: 60px 20px 30px;
   border-top: 1px solid #1a1a1a;
   margin-top: 100px;
 }
@@ -177,54 +195,34 @@ body {
   max-width: 1100px;
   margin: 0 auto;
   display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  gap: 40px;
+  justify-content: center; /* 連結群組置中 */
 }
 
-/* 左側品牌區 */
-.footer-brand {
-  flex: 1;
-  min-width: 250px;
-}
-
-.footer-logo {
-  font-family: Impact, sans-serif;
-  font-size: 1.8rem;
-  color: var(--primary-color); /* 霓虹青 */
-  letter-spacing: 2px;
-  margin-bottom: 15px;
-}
-
-.footer-slogan {
-  color: #888;
-  font-size: 0.95rem;
-  line-height: 1.8;
-}
-
-/* 右側連結區 */
 .footer-nav {
   display: flex;
-  gap: 60px;
+  gap: 80px;
   flex-wrap: wrap;
+  justify-content: center;
 }
 
 .footer-group h4 {
   color: #fff;
-  font-size: 1rem;
-  margin-bottom: 20px;
+  font-size: 0.9rem;
+  margin-bottom: 25px;
   text-transform: uppercase;
   letter-spacing: 2px;
   position: relative;
+  text-align: center;
 }
 
-/* 標題下的小橫線，增加細節感 */
+/* 標題下裝飾線置中 */
 .footer-group h4::after {
   content: "";
   position: absolute;
-  left: 0;
-  bottom: -8px;
-  width: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: -10px;
+  width: 15px;
   height: 2px;
   background: var(--primary-color);
 }
@@ -233,64 +231,46 @@ body {
   display: block;
   color: #666;
   text-decoration: none;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   margin-bottom: 12px;
   transition: 0.3s;
+  text-align: center;
 }
 
 .footer-group a:hover {
   color: var(--primary-color);
-  padding-left: 5px; /* 懸浮時輕微右移 */
 }
 
-/* 最底部版權 */
 .footer-bottom {
   max-width: 1100px;
-  margin: 60px auto 0;
-  padding-top: 30px;
+  margin: 50px auto 0;
+  padding-top: 25px;
   border-top: 1px solid #1a1a1a;
   text-align: center;
 }
 
 .footer-bottom p {
-  color: #444;
-  font-size: 0.75rem;
+  color: #333;
+  font-size: 0.7rem;
   letter-spacing: 1px;
 }
 
-/* 手機版適應 */
+/* --- 響應式設計 Responsive Design --- */
 @media (max-width: 768px) {
-  .footer-container {
-    flex-direction: column;
-    text-align: center;
-  }
-  .footer-group h4::after {
-    left: 50%;
-    transform: translateX(-50%);
-  }
   .footer-nav {
-    justify-content: center;
-    gap: 30px;
-  }
-}
-/* 手機版適應 */
-@media (max-width: 768px) {
-  .footer-container {
-    flex-direction: column;
-    text-align: center;
-  }
-  .footer-group h4::after {
-    left: 50%;
-    transform: translateX(-50%);
-  }
-  .footer-nav {
-    justify-content: center;
-    gap: 30px;
+    gap: 40px;
   }
 }
 
-/* 響應式微調 */
 @media (max-width: 600px) {
-  .nav-links { display: none; } /* 手機版暫時隱藏文字連結，或可改為漢堡選單 */
-  .logo { font-size: 3.5rem; }
+  .nav-links { 
+    display: none; /* 手機版隱藏文字連結 */
+  }
+  .logo {
+    font-size: 3rem;
+  }
+  .tagline {
+    font-size: 0.9rem;
+    white-space: normal;
+  }
 }
