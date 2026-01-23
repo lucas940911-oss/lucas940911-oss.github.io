@@ -165,13 +165,113 @@ body {
   border: none; border-radius: 8px; font-weight: bold; cursor: pointer;
 }
 
-/* Footer */
+/* --- 高級感 Footer 設計 --- */
 .footer {
-  padding: 50px 20px;
+  background: #050505; /* 比背景再深一點的黑 */
+  padding: 80px 20px 40px;
+  border-top: 1px solid #1a1a1a;
+  margin-top: 100px;
+}
+
+.footer-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 40px;
+}
+
+/* 左側品牌區 */
+.footer-brand {
+  flex: 1;
+  min-width: 250px;
+}
+
+.footer-logo {
+  font-family: Impact, sans-serif;
+  font-size: 1.8rem;
+  color: var(--primary-color); /* 霓虹青 */
+  letter-spacing: 2px;
+  margin-bottom: 15px;
+}
+
+.footer-slogan {
+  color: #888;
+  font-size: 0.95rem;
+  line-height: 1.8;
+}
+
+/* 右側連結區 */
+.footer-nav {
+  display: flex;
+  gap: 60px;
+  flex-wrap: wrap;
+}
+
+.footer-group h4 {
+  color: #fff;
+  font-size: 1rem;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  position: relative;
+}
+
+/* 標題下的小橫線，增加細節感 */
+.footer-group h4::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -8px;
+  width: 20px;
+  height: 2px;
+  background: var(--primary-color);
+}
+
+.footer-group a {
+  display: block;
+  color: #666;
+  text-decoration: none;
+  font-size: 0.9rem;
+  margin-bottom: 12px;
+  transition: 0.3s;
+}
+
+.footer-group a:hover {
+  color: var(--primary-color);
+  padding-left: 5px; /* 懸浮時輕微右移 */
+}
+
+/* 最底部版權 */
+.footer-bottom {
+  max-width: 1100px;
+  margin: 60px auto 0;
+  padding-top: 30px;
+  border-top: 1px solid #1a1a1a;
   text-align: center;
-  border-top: 1px solid #111;
-  color: #555;
-  font-size: 0.8rem;
+}
+
+.footer-bottom p {
+  color: #444;
+  font-size: 0.75rem;
+  letter-spacing: 1px;
+}
+
+/* 手機版適應 */
+@media (max-width: 768px) {
+  .footer-container {
+    flex-direction: column;
+    text-align: center;
+  }
+  .footer-group h4::after {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  .footer-nav {
+    justify-content: center;
+    gap: 30px;
+  }
 }
 
 /* 響應式微調 */
