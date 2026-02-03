@@ -86,7 +86,9 @@ function renderResults(list) {
 
   for (const song of limited) {
     const title = escapeHtml(song.title);
-    const artistLabel = escapeHtml(getArtists(song).join(", "));
+
+    // ✅ 顯示用：歌手用「•」分隔更像音樂平台
+    const artistLabel = escapeHtml(getArtists(song).join(" • "));
 
     const pageBtn =
       song.page && song.page.trim()
@@ -101,8 +103,12 @@ function renderResults(list) {
     const card = document.createElement("div");
     card.className = "card";
     card.innerHTML = `
-      <h3>${title} — ${artistLabel}</h3>
-      <div style="display:flex; gap:10px; margin-top:12px; flex-wrap:wrap;">
+      <div class="song-meta">
+        <p class="song-artist">${artistLabel}</p>
+        <h3 class="song-title">${title}</h3>
+      </div>
+
+      <div class="song-actions">
         ${pageBtn}
         ${reelBtn}
       </div>
