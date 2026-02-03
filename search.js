@@ -95,7 +95,7 @@ function renderResults(list) {
 
     const reelBtn =
       song.reel && song.reel.trim()
-        ? `<a class="btn" href="${song.reel}" target="_blank" rel="noopener">看 Reels</a>`
+        ? `<a class="btn" href="${song.reel}" target="_blank" rel="noopener">Reels</a>`
         : "";
 
     const card = document.createElement("div");
