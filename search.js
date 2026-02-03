@@ -70,19 +70,25 @@ function matches(song, query) {
 }
 
 /**
- * 渲染卡片到 #results
- * 最多顯示 30 筆，避免未來上百首時一次畫太多
+ * 渲染卡片到指定容器
+ * - targetId 預設 "results"
+ * - limit 預設 30（recent 通常會用 6）
  */
-function renderResults(list) {
-  const results = document.getElementById("results");
+function renderResults(list, targetId = "results", limit = 30) {
+  const results = document.getElementById(targetId);
+  if (!results) return;
+
   results.innerHTML = "";
 
   if (!list.length) {
+    // recent 區塊如果沒資料就留空，不要顯示「找不到」
+    if (targetId === "recent") return;
+
     results.innerHTML = `<div class="card"><h3>找不到符合的歌曲</h3></div>`;
     return;
   }
 
-  const limited = list.slice(0, 30);
+  const limited = list.slice(0, limit);
 
   for (const song of limited) {
     const title = escapeHtml(song.title);
@@ -116,10 +122,11 @@ function renderResults(list) {
     results.appendChild(card);
   }
 
-  if (list.length > 30) {
+  // results 區才需要「超過上限提示」
+  if (targetId === "results" && list.length > limit) {
     const more = document.createElement("div");
     more.className = "card";
-    more.innerHTML = `<p>符合結果超過 30 筆，請再輸入更精準的關鍵字。</p>`;
+    more.innerHTML = `<p>符合結果超過 ${limit} 筆，請再輸入更精準的關鍵字。</p>`;
     results.appendChild(more);
   }
 }
@@ -137,13 +144,14 @@ function debounce(fn, delay = 200) {
 
 async function initSearch() {
   const input = document.getElementById("search");
-  const results = document.getElementById("results");
-  if (!input || !results) return;
+  const resultsEl = document.getElementById("results");
+  const recentEl = document.getElementById("recent");
+  if (!input || !resultsEl) return;
 
   try {
     await loadSongs();
   } catch (e) {
-    results.innerHTML = `
+    resultsEl.innerHTML = `
       <div class="card">
         <h3>載入失敗</h3>
         <p>找不到 songs.json 或路徑不正確。請確認 songs.json 跟 songs.html 在同一層。</p>
@@ -152,12 +160,31 @@ async function initSearch() {
     return;
   }
 
-  // 預設顯示全部
-  renderResults(SONGS);
+  // ✅ 先渲染 Recently（前 6 首）
+  // 目前先用資料順序當「最近」，之後你若加上 date 欄位可改成真正排序
+  if (recentEl) renderResults(SONGS, "recent", 6);
+
+  // ✅ 預設顯示全部 Results
+  renderResults(SONS_SAFE(), "results", 30);
+
+  function SONS_SAFE() {
+    // 避免 SONGS 不是陣列時爆掉（容錯）
+    return Array.isArray(SONGS) ? SONGS : [];
+  }
 
   const run = debounce(() => {
-    const filtered = SONGS.filter((s) => matches(s, input.value));
-    renderResults(filtered);
+    const q = input.value;
+
+    const filtered = SONS_SAFE().filter((s) => matches(s, q));
+    renderResults(filtered, "results", 30);
+
+    // 有輸入時：recent 淡出（如果你 style.css 有做淡出可更漂亮）
+    // 沒輸入時：recent 回來
+    if (recentEl) {
+      const hasQuery = keyify(q).length > 0;
+      recentEl.style.opacity = hasQuery ? "0.35" : "1";
+      recentEl.style.pointerEvents = hasQuery ? "none" : "auto";
+    }
   }, 200);
 
   input.addEventListener("input", run);
@@ -166,8 +193,8 @@ async function initSearch() {
   input.addEventListener("keydown", (e) => {
     if (e.key === "Enter") {
       e.preventDefault();
-      const filtered = SONGS.filter((s) => matches(s, input.value));
-      renderResults(filtered);
+      const filtered = SONS_SAFE().filter((s) => matches(s, input.value));
+      renderResults(filtered, "results", 30);
     }
   });
 }
