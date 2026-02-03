@@ -1,15 +1,3 @@
-<nav class="navbar">
-  <div class="nav-container">
-    <a href="index.html" class="nav-logo">LABEL P</a>
-    <div class="nav-links">
-      <a href="songs.html">翻譯歌曲</a>
-      <a href="playlist.html">影片歌單</a>
-      <a href="merch.html">周邊商品</a>
-      <a href="about.html">關於廠牌</a>
-    </div>
-  </div>
-</nav>
-
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
@@ -19,55 +7,61 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="nav-logo">LABEL P</a>
+      <div class="nav-links">
+        <a href="songs.html">翻譯歌曲</a>
+        <a href="playlist.html">影片歌單</a>
+        <a href="merch.html">周邊商品</a>
+        <a href="about.html">關於廠牌</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Search Section -->
   <section class="dark">
     <div class="container">
       <h2 class="section-title">翻譯歌曲</h2>
-      <div class="grid">
-        <div class="card">
-          <img src="https://via.placeholder.com/400x400.png?text=Kendrick+Lamar" alt="HUMBLE.">
-          <h3>HUMBLE. — Kendrick Lamar</h3>
-          <a href="#" class="btn">查看翻譯</a>
-        </div>
-        <div class="card">
-          <img src="https://via.placeholder.com/400x400.png?text=Drake" alt="God's Plan">
-          <h3>God’s Plan — Drake</h3>
-          <a href="#" class="btn">查看翻譯</a>
-        </div>
-        <div class="card">
-          <img src="https://via.placeholder.com/400x400.png?text=Travis+Scott" alt="SICKO MODE">
-          <h3>SICKO MODE — Travis Scott</h3>
-          <a href="#" class="btn">查看翻譯</a>
-        </div>
-      </div>
+
+      <!-- 搜尋欄 -->
+      <input id="search" class="input" type="text" placeholder="搜尋歌手 / 歌名">
+
+      <!-- 搜尋結果（由 search.js 動態產生卡片） -->
+      <div id="results" class="grid" style="margin-top: 18px;"></div>
     </div>
   </section>
 
+  <!-- Footer -->
   <footer class="footer">
-  <div class="footer-container">
-    <!-- 原本左側的品牌區塊已移除，直接進入導覽連結 -->
-    <div class="footer-nav">
-      <div class="footer-group">
-        <h4>內容</h4>
-        <a href="songs.html">翻譯歌曲</a>
-        <a href="playlist.html">影片歌單</a>
-      </div>
-      <div class="footer-group">
-        <h4>關於</h4>
-        <a href="about.html">關於廠牌</a>
-        <a href="merch.html">周邊商品</a>
-      </div>
-      <div class="footer-group">
-        <h4>社群</h4>
-        <a href="mailto:labelpworkspace@gmail.com">聯絡合作</a>
-        <a href="https://www.instagram.com/labelplyrics">Instagram</a>
+    <div class="footer-container">
+      <div class="footer-nav">
+        <div class="footer-group">
+          <h4>內容</h4>
+          <a href="songs.html">翻譯歌曲</a>
+          <a href="playlist.html">影片歌單</a>
+        </div>
+        <div class="footer-group">
+          <h4>關於</h4>
+          <a href="about.html">關於廠牌</a>
+          <a href="merch.html">周邊商品</a>
+        </div>
+        <div class="footer-group">
+          <h4>社群</h4>
+          <a href="mailto:labelpworkspace@gmail.com">聯絡合作</a>
+          <a href="https://www.instagram.com/labelplyrics" target="_blank" rel="noopener">Instagram</a>
+        </div>
       </div>
     </div>
-  </div>
 
-  <div class="footer-bottom">
-    <p>&copy; 2025 LABEL P WORKSPACE. All Rights Reserved.</p>
-  </div>
-</footer>
-  
+    <div class="footer-bottom">
+      <p>&copy; 2025 LABEL P WORKSPACE. All Rights Reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Search Script（你要另外新增 search.js / songs.json） -->
+  <script src="search.js"></script>
 </body>
 </html>
