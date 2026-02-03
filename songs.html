@@ -21,16 +21,57 @@
     </div>
   </nav>
 
-  <!-- Search Section -->
-  <section class="dark">
-    <div class="container">
-      <h2 class="section-title">翻譯歌曲</h2>
+  <!-- HERO SEARCH (Spotify x Complex) -->
+  <section class="search-hero">
+    <div class="container search-hero-inner">
+      <div class="hero-kicker">LABEL P / LYRICS & CULTURE</div>
+
+      <h1 class="search-title">
+        FIND A SONG.<br>
+        UNDERSTAND IT.
+      </h1>
+
+      <p class="search-sub">
+        輸入歌手或歌名，快速找到翻譯與 Reels。也可以先從熱門歌手開始探索。
+      </p>
 
       <!-- 搜尋欄 -->
-      <input id="search" class="input" type="text" placeholder="搜尋歌手 / 歌名">
+      <div class="search-bar">
+        <input id="search" class="search-input" type="text" placeholder="Search artist or song…（例如：Drake / ZEZE）">
+      </div>
 
-      <!-- 搜尋結果（由 search.js 動態產生卡片） -->
-      <div id="results" class="grid" style="margin-top: 18px;"></div>
+      <!-- Trending chips -->
+      <div class="trending">
+        <span class="trending-label">Trending</span>
+        <div class="chips">
+          <button class="chip" type="button" data-q="Drake">Drake</button>
+          <button class="chip" type="button" data-q="Travis Scott">Travis Scott</button>
+          <button class="chip" type="button" data-q="Central Cee">Central Cee</button>
+          <button class="chip" type="button" data-q="Don Toliver">Don Toliver</button>
+          <button class="chip" type="button" data-q="Ice Spice">Ice Spice</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTENT -->
+  <section class="dark">
+    <div class="container">
+
+      <!-- Recently -->
+      <div class="section-head">
+        <h2 class="section-title-left">Recently Translated</h2>
+        <p class="section-hint">先逛一下最近更新，或用上面的搜尋直接切入。</p>
+      </div>
+      <div id="recent" class="grid"></div>
+
+      <!-- Results -->
+      <div class="section-head" style="margin-top: 70px;">
+        <h2 class="section-title-left">Search Results</h2>
+        <p class="section-hint">輸入關鍵字後，結果會即時更新。</p>
+      </div>
+      <div id="results" class="grid"></div>
+
     </div>
   </section>
 
@@ -61,7 +102,22 @@
     </div>
   </footer>
 
-  <!-- Search Script（你要另外新增 search.js / songs.json） -->
+  <!-- Search Script -->
   <script src="search.js"></script>
+
+  <!-- Chip click behavior (no framework) -->
+  <script>
+    document.addEventListener("click", (e) => {
+      const btn = e.target.closest(".chip");
+      if (!btn) return;
+      const q = btn.getAttribute("data-q") || "";
+      const input = document.getElementById("search");
+      if (!input) return;
+      input.value = q;
+      input.dispatchEvent(new Event("input"));
+      input.focus();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+  </script>
 </body>
 </html>
