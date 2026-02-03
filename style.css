@@ -7,6 +7,10 @@
   --text-dim: #bbbbbb;
 }
 
+* {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
   background: var(--bg-dark);
@@ -101,6 +105,7 @@ body {
   border-radius: 50px;
   transition: all 0.3s ease;
   display: inline-block;
+  text-align: center;
 }
 
 .btn-hero:hover, .btn:hover {
@@ -133,15 +138,16 @@ body {
 .card {
   background: var(--bg-card);
   border-radius: 15px;
-  padding: 20px;
+  padding: 22px 20px;
   text-align: center;
   border: 1px solid #222;
-  transition: transform 0.3s ease;
+  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
 }
 
 .card:hover {
   transform: translateY(-10px);
   border-color: #444;
+  box-shadow: 0 10px 35px rgba(0,0,0,0.45);
 }
 
 .card img {
@@ -150,8 +156,66 @@ body {
   margin-bottom: 20px;
 }
 
+/* --- 搜尋輸入框（Songs Search UI） --- */
+.input, .textarea {
+  width: 100%;
+  background: rgba(26,26,26,0.9);
+  color: #fff;
+  border: 1px solid #333;
+  border-radius: 12px;
+  padding: 14px 14px;
+  margin-top: 5px;
+  margin-bottom: 20px;
+  outline: none;
+}
+
+.input::placeholder,
+.textarea::placeholder {
+  color: rgba(255,255,255,0.55);
+}
+
+.input:focus,
+.textarea:focus {
+  border-color: rgba(0, 224, 255, 0.6);
+  box-shadow: 0 0 0 3px rgba(0, 224, 255, 0.12);
+}
+
+/* --- 搜尋結果卡片：更像音樂平台的排版 --- */
+.song-meta {
+  margin-top: 2px;
+}
+
+.song-artist {
+  font-size: 0.9rem;
+  letter-spacing: 1px;
+  color: rgba(255,255,255,0.65);
+  margin: 0 0 6px 0;
+}
+
+.song-title {
+  font-size: 1.6rem;
+  font-weight: 800;
+  margin: 0 0 18px 0;
+  letter-spacing: 0.5px;
+}
+
+.song-actions {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.song-actions .btn {
+  min-width: 110px;
+}
+
 /* --- 表單區塊 Form --- */
-.suggestion { background: #080808; padding: 100px 20px; }
+.suggestion {
+  background: #080808;
+  padding: 100px 20px;
+}
+
 .form-card {
   background: #111;
   max-width: 500px;
@@ -159,18 +223,6 @@ body {
   padding: 40px;
   border-radius: 20px;
   box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-}
-
-.input, .textarea {
-  width: 100%;
-  background: #1a1a1a;
-  color: #fff;
-  border: 1px solid #333;
-  border-radius: 8px;
-  padding: 12px;
-  margin-top: 5px;
-  margin-bottom: 20px;
-  box-sizing: border-box;
 }
 
 .btn-submit {
@@ -181,6 +233,12 @@ body {
   border-radius: 8px;
   font-weight: bold;
   cursor: pointer;
+  transition: 0.25s ease;
+}
+
+.btn-submit:hover {
+  filter: brightness(0.95);
+  box-shadow: 0 0 20px rgba(0, 224, 255, 0.25);
 }
 
 /* --- 重新設計的精簡頁尾 Footer --- */
@@ -263,14 +321,26 @@ body {
 }
 
 @media (max-width: 600px) {
-  .nav-links { 
+  .nav-links {
     display: none; /* 手機版隱藏文字連結 */
   }
+
   .logo {
     font-size: 3rem;
   }
+
   .tagline {
     font-size: 0.9rem;
     white-space: normal;
+  }
+
+  /* 手機上字級稍微收斂，卡片更耐看 */
+  .song-title {
+    font-size: 1.35rem;
+  }
+
+  .song-actions .btn {
+    min-width: 100px;
+    padding: 11px 22px;
   }
 }
