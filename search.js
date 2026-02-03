@@ -31,6 +31,22 @@ function escapeHtml(str) {
 }
 
 /**
+ * ✅ 統一取得歌手清單
+ * 支援：
+ * - 新格式：artists: ["A","B"]
+ * - 舊格式：artist: "A"
+ * - 舊格式：artist: ["A"]
+ */
+function getArtists(song) {
+  if (Array.isArray(song.artists) && song.artists.length) return song.artists;
+
+  if (Array.isArray(song.artist) && song.artist.length) return song.artist;
+  if (typeof song.artist === "string" && song.artist.trim()) return [song.artist.trim()];
+
+  return [];
+}
+
+/**
  * 載入 songs.json
  * ⚠️ 若你把 songs.json 放到 /data/songs.json，記得把下面路徑改掉
  */
@@ -41,13 +57,13 @@ async function loadSongs() {
 }
 
 /**
- * 比對規則：只搜 artists + title
+ * 比對規則：只搜 artists/artist + title
  */
 function matches(song, query) {
   const q = keyify(query);
   if (!q) return true;
 
-  const artistsText = (song.artists || []).map(keyify).join(" ");
+  const artistsText = getArtists(song).map(keyify).join(" ");
   const hay = `${artistsText} ${keyify(song.title)}`;
 
   return hay.includes(q);
@@ -70,7 +86,7 @@ function renderResults(list) {
 
   for (const song of limited) {
     const title = escapeHtml(song.title);
-    const artistLabel = escapeHtml((song.artists || []).join(", "));
+    const artistLabel = escapeHtml(getArtists(song).join(", "));
 
     const pageBtn =
       song.page && song.page.trim()
@@ -130,7 +146,7 @@ async function initSearch() {
     return;
   }
 
-  // 預設顯示全部（你如果想一開始不顯示，把這行註解掉）
+  // 預設顯示全部
   renderResults(SONGS);
 
   const run = debounce(() => {
@@ -139,8 +155,16 @@ async function initSearch() {
   }, 200);
 
   input.addEventListener("input", run);
+
+  // ✅ 讓 Enter 有反應：按 Enter 就強制跑一次搜尋（不跳頁、不重整）
+  input.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      const filtered = SONGS.filter((s) => matches(s, input.value));
+      renderResults(filtered);
+    }
+  });
 }
 
 // 啟動
 initSearch();
-
