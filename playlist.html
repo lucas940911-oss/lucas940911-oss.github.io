@@ -5,13 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>影片歌單 — Label P</title>
   <link rel="stylesheet" href="style.css">
-
-  <!-- Instagram Embed Script -->
-  <script async src="https://www.instagram.com/embed.js"></script>
 </head>
-<body>
 
-  <!-- ✅ Navbar 要放在 <body> 裡面（你原本放在 DOCTYPE 前面會不標準） -->
+<body>
   <nav class="navbar">
     <div class="nav-container">
       <a href="index.html" class="nav-logo">LABEL P</a>
@@ -28,19 +24,34 @@
     <div class="container">
       <h2 class="section-title">影片歌單</h2>
 
-      <!-- ✅ 工具列：搜尋 + 歌手篩選 -->
+      <noscript>
+        <div style="margin: 10px 0; padding: 12px; border: 1px solid #ddd; border-radius: 12px; opacity: .9;">
+          這個頁面需要啟用 JavaScript 才能載入歌單內容。
+        </div>
+      </noscript>
+
+      <!-- 工具列：搜尋 + 歌手篩選 -->
       <div class="playlist-toolbar" style="display:flex; gap:10px; flex-wrap:wrap; margin: 12px 0 18px;">
-        <input id="q" type="text" placeholder="搜尋歌名 / 歌手…" style="padding:10px 12px; border:1px solid #ddd; border-radius:10px; min-width:220px;">
-        <select id="artist" style="padding:10px 12px; border:1px solid #ddd; border-radius:10px;">
+        <input
+          id="q"
+          type="text"
+          placeholder="搜尋歌名 / 歌手…"
+          autocomplete="off"
+          style="padding:10px 12px; border:1px solid #ddd; border-radius:10px; min-width:220px;"
+        >
+        <select
+          id="artist"
+          style="padding:10px 12px; border:1px solid #ddd; border-radius:10px;"
+        >
           <option value="">全部歌手</option>
         </select>
       </div>
 
-      <!-- ✅ 自動渲染結果 -->
-      <div id="grid" class="grid"></div>
+      <!-- 自動渲染結果 -->
+      <div id="grid" class="grid" aria-live="polite"></div>
 
-      <!-- ✅ 錯誤/載入提示 -->
-      <div id="msg" style="margin-top:14px; opacity:.8;"></div>
+      <!-- 錯誤/載入提示 -->
+      <div id="msg" style="margin-top:14px; opacity:.8;" aria-live="polite"></div>
     </div>
   </section>
 
@@ -70,7 +81,8 @@
     </div>
   </footer>
 
-  <!-- ✅ 你的渲染腳本 -->
+  <!-- ✅ 先載入 playlist.js 生成 blockquote，再讓 IG script process -->
   <script src="playlist.js"></script>
+  <script async src="https://www.instagram.com/embed.js"></script>
 </body>
 </html>
