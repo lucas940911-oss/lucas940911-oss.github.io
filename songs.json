@@ -1,50 +1,70 @@
 [
   {
-    "artists": ["Ice Spice"],
-    "title": "Big Guy",
-    "page": "",
-    "reel": "https://www.instagram.com/reel/DUSv-J_CfAN/"
-  },
-  {
-    "artists": ["Dave", "Tems"],
-    "title": "Raindance",
-    "page": "",
-    "reel": "https://www.instagram.com/reel/DUNlvJ5icua/"
-  },
-  {
-    "artists": ["Travis Scott", "Kodak Black", "Offset"],
-    "title": "ZEZE",
-    "page": "",
-    "reel": "https://www.instagram.com/reel/DUIeoe9iX_3/"
-  },
-  {
-    "artists": ["Drake"],
-    "title": "9",
-    "page": "",
-    "reel": "https://www.instagram.com/reel/DUAyIjgCUan/"
-  },
-  {
-    "artists": ["Don Toliver"],
-    "title": "No Idea",
-    "page": "",
-    "reel": "https://www.instagram.com/reel/DT7hkbvicv9/"
-  },
-  {
-    "artists": ["A$AP Rocky"],
+    "artists": [
+      "A$AP Rocky"
+    ],
     "title": "HELICOPTER",
     "page": "",
     "reel": "https://www.instagram.com/reel/DT2TM1FiQHW/"
   },
   {
-    "artists": ["D-Block Europe", "Central Cee"],
+    "artists": [
+      "D-Block Europe",
+      "Central Cee"
+    ],
     "title": "Overseas",
     "page": "",
     "reel": "https://www.instagram.com/reel/DTxNnuBAegJ/"
   },
   {
-    "artists": ["Kanye West"],
+    "artists": [
+      "Dave",
+      "Tems"
+    ],
+    "title": "Raindance",
+    "page": "",
+    "reel": "https://www.instagram.com/reel/DUNlvJ5icua/"
+  },
+  {
+    "artists": [
+      "Don Toliver"
+    ],
+    "title": "No Idea",
+    "page": "",
+    "reel": "https://www.instagram.com/reel/DT7hkbvicv9/"
+  },
+  {
+    "artists": [
+      "Drake"
+    ],
+    "title": "9",
+    "page": "",
+    "reel": "https://www.instagram.com/reel/DUAyIjgCUan/"
+  },
+  {
+    "artists": [
+      "Ice Spice"
+    ],
+    "title": "Big Guy",
+    "page": "",
+    "reel": "https://www.instagram.com/reel/DUSv-J_CfAN/"
+  },
+  {
+    "artists": [
+      "Kanye West"
+    ],
     "title": "Father Stretch My Hands Pt. 1",
     "page": "",
     "reel": "https://www.instagram.com/reel/DTpZnRZiZYH/"
+  },
+  {
+    "artists": [
+      "Travis Scott",
+      "Kodak Black",
+      "Offset"
+    ],
+    "title": "ZEZE",
+    "page": "",
+    "reel": "https://www.instagram.com/reel/DUIeoe9iX_3/"
   }
 ]
