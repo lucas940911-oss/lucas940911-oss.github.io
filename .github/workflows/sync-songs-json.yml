@@ -1,8 +1,9 @@
-name: Sync songs.json from Google Sheet (manual, safest)
+name: Sync songs.json from Google Sheet
 
 on:
-  workflow_dispatch: {}
-
+  workflow_dispatch: {}   # ✅ 保留手動按 Run
+  schedule:
+    - cron: "0 16 * * *" 
 permissions:
   contents: write
 
@@ -13,7 +14,7 @@ jobs:
       - name: Checkout (full history)
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0   # ✅ 關鍵：不要 shallow clone，才拉得到遠端最新提交
+          fetch-depth: 0
           ref: main
 
       - name: Configure git
@@ -21,7 +22,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-      - name: Pull latest from origin/main (rebase)
+      - name: Pull latest
         run: |
           git pull --rebase origin main
 
@@ -37,7 +38,7 @@ jobs:
           const raw = fs.readFileSync("/tmp/songs_api.json", "utf8").trim();
 
           if (raw.startsWith("<!DOCTYPE html") || raw.startsWith("<html")) {
-            console.error("ERROR: Got HTML instead of JSON. Check Apps Script access/deploy.");
+            console.error("ERROR: Got HTML instead of JSON.");
             process.exit(1);
           }
 
@@ -49,7 +50,7 @@ jobs:
           }
 
           if (!Array.isArray(data)) {
-            console.error("ERROR: Expected array JSON from API.");
+            console.error("ERROR: Expected array JSON.");
             process.exit(1);
           }
 
@@ -81,15 +82,15 @@ jobs:
           normalized.sort((a, b) => {
             const ta = toTime(a.date);
             const tb = toTime(b.date);
-            if (tb !== ta) return tb - ta; // ✅ 新到舊
+            if (tb !== ta) return tb - ta;
             return (a.title || "").localeCompare(b.title || "");
           });
 
-          fs.writeFileSync("songs.json", JSON.stringify(normalized, null, 2) + "\n", "utf8");
+          fs.writeFileSync("songs.json", JSON.stringify(normalized, null, 2) + "\n");
           console.log("songs.json updated with", normalized.length, "items");
           NODE
 
-      - name: Commit & Push (with rebase retry)
+      - name: Commit & Push
         run: |
           if git diff --quiet; then
             echo "No changes."
@@ -97,8 +98,6 @@ jobs:
           fi
 
           git add songs.json
-          git commit -m "chore: sync songs.json from Google Sheet"
-
-          # ✅ 再 rebase 一次 + push，避免你剛好在流程中有人又推了新 commit
+          git commit -m "chore: auto sync songs.json from Google Sheet"
           git pull --rebase origin main
           git push origin main
