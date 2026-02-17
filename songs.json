@@ -1,50 +1,50 @@
 [
   {
-    "artist": "Ice Spice",
+    "artists": ["Ice Spice"],
     "title": "Big Guy",
     "page": "",
-    "reel": "https://www.instagram.com/reel/DUSv-J_CfAN/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA=="
+    "reel": "https://www.instagram.com/reel/DUSv-J_CfAN/"
   },
   {
     "artists": ["Dave", "Tems"],
     "title": "Raindance",
     "page": "",
-    "reel": "https://www.instagram.com/reel/DUNlvJ5icua/?utm_source=ig_web_button_share_sheet&igsh=MzRlODBiNWFlZA=="
+    "reel": "https://www.instagram.com/reel/DUNlvJ5icua/"
   },
   {
     "artists": ["Travis Scott", "Kodak Black", "Offset"],
     "title": "ZEZE",
     "page": "",
-    "reel": "https://www.instagram.com/reel/DUIeoe9iX_3/?utm_source=ig_web_button_share_sheet&igsh=MzRlODBiNWFlZA=="
+    "reel": "https://www.instagram.com/reel/DUIeoe9iX_3/"
   },
   {
-    "artist": "Drake",
+    "artists": ["Drake"],
     "title": "9",
     "page": "",
-    "reel": "https://www.instagram.com/reel/DUAyIjgCUan/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA=="
+    "reel": "https://www.instagram.com/reel/DUAyIjgCUan/"
   },
   {
-    "artist": "Don Toliver",
+    "artists": ["Don Toliver"],
     "title": "No Idea",
     "page": "",
-    "reel": "https://www.instagram.com/reel/DT7hkbvicv9/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA=="
+    "reel": "https://www.instagram.com/reel/DT7hkbvicv9/"
   },
   {
-    "artist": "A$AP Rocky",
+    "artists": ["A$AP Rocky"],
     "title": "HELICOPTER",
     "page": "",
-    "reel": "https://www.instagram.com/reel/DT2TM1FiQHW/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA=="
+    "reel": "https://www.instagram.com/reel/DT2TM1FiQHW/"
   },
   {
-    "artists": ["D-Block Europe", "Central Cee‬"],
+    "artists": ["D-Block Europe", "Central Cee"],
     "title": "Overseas",
     "page": "",
-    "reel": "https://www.instagram.com/reel/DTxNnuBAegJ/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA=="
+    "reel": "https://www.instagram.com/reel/DTxNnuBAegJ/"
   },
   {
-    "artist": "Kanye West",
+    "artists": ["Kanye West"],
     "title": "Father Stretch My Hands Pt. 1",
     "page": "",
-    "reel": "https://www.instagram.com/reel/DTpZnRZiZYH/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA=="
+    "reel": "https://www.instagram.com/reel/DTpZnRZiZYH/"
   }
 ]
