@@ -1,5 +1,5 @@
 // ✅ 把這行換成你的 Apps Script Web App /exec URL
-const SONGS_URL = "https://script.google.com/macros/s/AKfycbyXFx65BMWwmEoPH4tbpfeqAOqFfqfPDTxYlTJ9Yw6y/dev";
+const SONGS_URL = "https://script.google.com/macros/s/AKfycbx3NfhoPwClRnby7o9LBVnZIUWg5EiIJun66BBrEnm3xrY_osu-ckNbN1TptDxQ05XaYQ/exec";
 
 const grid = document.getElementById("grid");
 const msg = document.getElementById("msg");
