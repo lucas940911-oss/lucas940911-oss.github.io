@@ -1,15 +1,3 @@
-<nav class="navbar">
-  <div class="nav-container">
-    <a href="index.html" class="nav-logo">LABEL P</a>
-    <div class="nav-links">
-      <a href="songs.html">翻譯歌曲</a>
-      <a href="playlist.html">影片歌單</a>
-      <a href="merch.html">周邊商品</a>
-      <a href="about.html">關於廠牌</a>
-    </div>
-  </div>
-</nav>
-
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
@@ -17,53 +5,72 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>影片歌單 — Label P</title>
   <link rel="stylesheet" href="style.css">
+
+  <!-- Instagram Embed Script -->
+  <script async src="https://www.instagram.com/embed.js"></script>
 </head>
 <body>
+
+  <!-- ✅ Navbar 要放在 <body> 裡面（你原本放在 DOCTYPE 前面會不標準） -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="nav-logo">LABEL P</a>
+      <div class="nav-links">
+        <a href="songs.html">翻譯歌曲</a>
+        <a href="playlist.html">影片歌單</a>
+        <a href="merch.html">周邊商品</a>
+        <a href="about.html">關於廠牌</a>
+      </div>
+    </div>
+  </nav>
+
   <section class="dark">
     <div class="container">
       <h2 class="section-title">影片歌單</h2>
-      <div class="grid">
-        <div class="card">
-          <h3>Kendrick Lamar — HUMBLE.</h3>
-          <a href="https://www.youtube.com/watch?v=tvTRZJ-4EyI" target="_blank" class="btn">觀看原版</a>
-        </div>
-        <div class="card">
-          <h3>Drake — God’s Plan</h3>
-          <a href="https://www.youtube.com/watch?v=xpVfcZ0ZcFM" target="_blank" class="btn">觀看原版</a>
-        </div>
-        <div class="card">
-          <h3>Travis Scott — SICKO MODE</h3>
-          <a href="https://www.youtube.com/watch?v=6ONRf7h3Mdk" target="_blank" class="btn">觀看原版</a>
-        </div>
+
+      <!-- ✅ 工具列：搜尋 + 歌手篩選 -->
+      <div class="playlist-toolbar" style="display:flex; gap:10px; flex-wrap:wrap; margin: 12px 0 18px;">
+        <input id="q" type="text" placeholder="搜尋歌名 / 歌手…" style="padding:10px 12px; border:1px solid #ddd; border-radius:10px; min-width:220px;">
+        <select id="artist" style="padding:10px 12px; border:1px solid #ddd; border-radius:10px;">
+          <option value="">全部歌手</option>
+        </select>
       </div>
+
+      <!-- ✅ 自動渲染結果 -->
+      <div id="grid" class="grid"></div>
+
+      <!-- ✅ 錯誤/載入提示 -->
+      <div id="msg" style="margin-top:14px; opacity:.8;"></div>
     </div>
   </section>
-<footer class="footer">
-  <div class="footer-container">
-    <!-- 原本左側的品牌區塊已移除，直接進入導覽連結 -->
-    <div class="footer-nav">
-      <div class="footer-group">
-        <h4>內容</h4>
-        <a href="songs.html">翻譯歌曲</a>
-        <a href="playlist.html">影片歌單</a>
-      </div>
-      <div class="footer-group">
-        <h4>關於</h4>
-        <a href="about.html">關於廠牌</a>
-        <a href="merch.html">周邊商品</a>
-      </div>
-      <div class="footer-group">
-        <h4>社群</h4>
-        <a href="mailto:labelpworkspace@gmail.com">聯絡合作</a>
-        <a href="https://www.instagram.com/labelplyrics">Instagram</a>
+
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-nav">
+        <div class="footer-group">
+          <h4>內容</h4>
+          <a href="songs.html">翻譯歌曲</a>
+          <a href="playlist.html">影片歌單</a>
+        </div>
+        <div class="footer-group">
+          <h4>關於</h4>
+          <a href="about.html">關於廠牌</a>
+          <a href="merch.html">周邊商品</a>
+        </div>
+        <div class="footer-group">
+          <h4>社群</h4>
+          <a href="mailto:labelpworkspace@gmail.com">聯絡合作</a>
+          <a href="https://www.instagram.com/labelplyrics" target="_blank" rel="noreferrer">Instagram</a>
+        </div>
       </div>
     </div>
-  </div>
 
-  <div class="footer-bottom">
-    <p>&copy; 2025 LABEL P WORKSPACE. All Rights Reserved.</p>
-  </div>
-</footer>
-  
+    <div class="footer-bottom">
+      <p>&copy; 2025 LABEL P WORKSPACE. All Rights Reserved.</p>
+    </div>
+  </footer>
+
+  <!-- ✅ 你的渲染腳本 -->
+  <script src="playlist.js"></script>
 </body>
 </html>
