@@ -58,12 +58,14 @@
   <section class="dark">
     <div class="container">
 
-      <!-- Recently -->
-      <div class="section-head">
-        <h2 class="section-title-left">Recently Translated</h2>
-        <p class="section-hint">先逛一下最近更新，或用上面的搜尋直接切入。</p>
-      </div>
-      <div id="recent" class="grid"></div>
+      <!-- ✅ Recently 區塊整段包起來，才可以整段隱藏 -->
+      <section id="recently-section">
+        <div class="section-head">
+          <h2 class="section-title-left">Recently Translated</h2>
+          <p class="section-hint">先逛一下最近更新，或用上面的搜尋直接切入。</p>
+        </div>
+        <div id="recent" class="grid"></div>
+      </section>
 
       <!-- Results -->
       <div class="section-head" style="margin-top: 70px;">
@@ -104,6 +106,26 @@
 
   <!-- Search Script -->
   <script src="search.js"></script>
+
+  <!-- ✅ Recently 自動隱藏邏輯：有輸入就隱藏，清空就顯示 -->
+  <script>
+    (function () {
+      const input = document.getElementById("search");
+      const recentlySection = document.getElementById("recently-section");
+
+      function toggleRecently() {
+        if (!input || !recentlySection) return;
+        const hasText = input.value.trim().length > 0;
+        recentlySection.style.display = hasText ? "none" : "";
+      }
+
+      // 初始狀態
+      toggleRecently();
+
+      // 打字時
+      input?.addEventListener("input", toggleRecently);
+    })();
+  </script>
 
   <!-- Chip click behavior (no framework) -->
   <script>
