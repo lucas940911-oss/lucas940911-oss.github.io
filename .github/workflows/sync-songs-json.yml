@@ -10,8 +10,20 @@ jobs:
   sync:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Checkout (full history)
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0   # ✅ 關鍵：不要 shallow clone，才拉得到遠端最新提交
+          ref: main
+
+      - name: Configure git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Pull latest from origin/main (rebase)
+        run: |
+          git pull --rebase origin main
 
       - name: Fetch JSON from Apps Script
         run: |
@@ -24,7 +36,6 @@ jobs:
 
           const raw = fs.readFileSync("/tmp/songs_api.json", "utf8").trim();
 
-          // 防呆：抓到 HTML（登入頁/錯誤頁）就中止，避免覆蓋 songs.json
           if (raw.startsWith("<!DOCTYPE html") || raw.startsWith("<html")) {
             console.error("ERROR: Got HTML instead of JSON. Check Apps Script access/deploy.");
             process.exit(1);
@@ -42,21 +53,18 @@ jobs:
             process.exit(1);
           }
 
-          // 解析日期：只接受 YYYY-MM-DD；空值視為最舊
           function toTime(dateStr) {
             const s = (dateStr ?? "").toString().trim();
             const m = s.match(/^(\d{4})-(\d{2})-(\d{2})$/);
             if (!m) return 0;
-            // 用 UTC 避免時區造成前一天/後一天
-            const y = Number(m[1]), mo = Number(m[2]) - 1, d = Number(m[3]);
-            return Date.UTC(y, mo, d);
+            return Date.UTC(Number(m[1]), Number(m[2]) - 1, Number(m[3]));
           }
 
           const normalized = data.map((s) => {
             const title = (s.title ?? "").toString().trim();
             const page  = (s.page ?? "").toString().trim();
             const reel  = (s.reel ?? "").toString().trim();
-            const date  = (s.date ?? "").toString().trim(); // ✅ 新增 date
+            const date  = (s.date ?? "").toString().trim();
 
             let artists = [];
             if (Array.isArray(s.artists)) {
@@ -70,32 +78,27 @@ jobs:
             return { artists, title, page, reel, date };
           }).filter(x => x.title || x.reel || x.artists.length);
 
-          // ✅ 核心：依 date 新到舊排序；同日再用 title 排，讓順序穩定
           normalized.sort((a, b) => {
             const ta = toTime(a.date);
             const tb = toTime(b.date);
-            if (tb !== ta) return tb - ta; // 新的在前
+            if (tb !== ta) return tb - ta; // ✅ 新到舊
             return (a.title || "").localeCompare(b.title || "");
           });
 
           fs.writeFileSync("songs.json", JSON.stringify(normalized, null, 2) + "\n", "utf8");
-          console.log("songs.json updated with", normalized.length, "items (sorted by date desc)");
+          console.log("songs.json updated with", normalized.length, "items");
           NODE
 
-      - name: Commit & push if changed
+      - name: Commit & Push (with rebase retry)
         run: |
           if git diff --quiet; then
             echo "No changes."
             exit 0
           fi
 
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-
           git add songs.json
-          git commit -m "chore: sync songs.json from Google Sheet" || echo "Nothing to commit"
+          git commit -m "chore: sync songs.json from Google Sheet"
 
-          # ✅ 關鍵：先把遠端更新 rebase 進來，再 push（避免 fetch first）
+          # ✅ 再 rebase 一次 + push，避免你剛好在流程中有人又推了新 commit
           git pull --rebase origin main
-
           git push origin main
