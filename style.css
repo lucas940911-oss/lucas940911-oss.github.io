@@ -514,4 +514,15 @@ body {
     font-size: 1.55rem;
   }
 }
+.dynamic-line{
+  display:inline-block;
+  white-space:nowrap;
+  will-change:opacity,transform;
+  transition:opacity 260ms ease, transform 260ms ease;
+}
+.dynamic-line.is-out{opacity:0; transform:translateY(6px);}
+.dynamic-line.is-in{opacity:1; transform:translateY(0);}
+@media (prefers-reduced-motion: reduce){
+  .dynamic-line{transition:none;}
+}
 
