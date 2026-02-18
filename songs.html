@@ -81,7 +81,7 @@
       </section>
 
       <!-- Results -->
-      <div class="section-head" style="section-head results-head">
+      <div class="section-head results-head">
         <h2 class="section-title-left">Search Results</h2>
         <p class="section-hint">輸入關鍵字後，結果會即時更新。</p>
       </div>
@@ -120,20 +120,19 @@
   <!-- Search Script -->
   <script src="search.js"></script>
 
-  <!-- ✅ Recently 自動隱藏邏輯：有輸入就隱藏，清空就顯示 -->
+  <!-- ✅ Recently 自動隱藏邏輯：有輸入就隱藏，清空就顯示（改成 body class 控制，避免留白） -->
   <script>
     (function () {
       const input = document.getElementById("search");
-      const recentlySection = document.getElementById("recently-section");
 
-      function toggleRecently() {
-        if (!input || !recentlySection) return;
+      function toggleSearching() {
+        if (!input) return;
         const hasText = input.value.trim().length > 0;
-        recentlySection.style.display = hasText ? "none" : "";
+        document.body.classList.toggle("searching", hasText);
       }
 
-      toggleRecently();
-      input?.addEventListener("input", toggleRecently);
+      toggleSearching();
+      input?.addEventListener("input", toggleSearching);
     })();
   </script>
 
