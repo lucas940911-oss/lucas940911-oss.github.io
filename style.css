@@ -514,6 +514,7 @@ body {
     font-size: 1.55rem;
   }
 }
+
 .dynamic-line{
   display:inline-block;
   white-space:nowrap;
@@ -524,4 +525,56 @@ body {
 .dynamic-line.is-in{opacity:1; transform:translateY(0);}
 @media (prefers-reduced-motion: reduce){
   .dynamic-line{transition:none;}
+}
+
+/* =========================
+   SAFE OVERRIDES (to prevent "no-style / cache / overflow" issues)
+   只做防呆與跨設備穩定，不改你原本風格
+========================= */
+
+/* 1) 防止任何水平爆版（手機最常見） */
+html, body { overflow-x: hidden; }
+
+/* 2) 任何媒體都不要超出容器 */
+img, video, iframe { max-width: 100%; height: auto; }
+
+/* 3) 超窄螢幕不要硬塞 280px 卡片（避免左右滑動） */
+@media (max-width: 360px) {
+  .grid { grid-template-columns: 1fr; }
+}
+
+/* 4) Dynamic line：字體繼承，避免不同瀏覽器粗細跳動 */
+.dynamic-line{
+  font: inherit;
+  -webkit-font-smoothing: inherit;
+}
+
+/* 5) B：手機不換行 → 用縮字解決不溢出 */
+.search-title .dynamic-line { white-space: nowrap; }
+
+@media (max-width: 820px) {
+  /* 稍微收斂字距，降低爆版機率（只影響 songs hero 標題） */
+  .search-title { letter-spacing: 1.4px; }
+}
+
+@media (max-width: 600px) {
+  .search-title { letter-spacing: 1px; }
+
+  .search-title .dynamic-line{
+    font-size: clamp(1.15rem, 6.2vw, 2.0rem);
+    letter-spacing: 0.9px;
+  }
+}
+
+@media (max-width: 390px) {
+  .search-title .dynamic-line{
+    font-size: clamp(1.05rem, 6.6vw, 1.8rem);
+    letter-spacing: 0.8px;
+  }
+}
+
+/* 6) 更好的鍵盤 focus（不影響滑鼠外觀） */
+:focus-visible {
+  outline: 2px solid rgba(0,224,255,0.65);
+  outline-offset: 3px;
 }
