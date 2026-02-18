@@ -550,7 +550,7 @@ img, video, iframe { max-width: 100%; height: auto; }
   margin: 0 0 12px 0;
 }
 
-/* 第一行（你 songs.html 需要 <span class="title-line">FIND A SONG.</span>） */
+/* 第一行 */
 .search-title .title-line{
   display: inline-block;
   font-size: var(--hero-title);
@@ -558,7 +558,7 @@ img, video, iframe { max-width: 100%; height: auto; }
   font-weight: 400;
 }
 
-/* 第二行：固定置中容器 */
+/* 第二行容器：用 flex 永遠置中，不吃字長影響 */
 .dynamic-wrap{
   display: flex;
   justify-content: center;
@@ -568,14 +568,14 @@ img, video, iframe { max-width: 100%; height: auto; }
   overflow: hidden;
 }
 
-/* 第二行文字：同字級 + 不換行 + 清掉舊鎖寬 */
+/* 第二行：同字級 + 不換行 + 清掉任何舊鎖寬 */
 .dynamic-line{
   display: inline-block;
   font-size: var(--hero-title);
   font-family: Impact, sans-serif;
   font-weight: 400;
-
   white-space: nowrap;
+
   width: auto !important;
   max-width: 100%;
   text-align: center;
@@ -591,7 +591,7 @@ img, video, iframe { max-width: 100%; height: auto; }
   :root{ --hero-letter: 1.4px; }
 }
 
-/* 手機：兩行一起縮（同變數） */
+/* 手機：兩行一起縮（同一個變數） */
 @media (max-width: 600px){
   :root{
     --hero-title: clamp(1.35rem, 7.2vw, 2.2rem);
@@ -619,8 +619,29 @@ img, video, iframe { max-width: 100%; height: auto; }
 @media (prefers-reduced-motion: reduce){
   .dynamic-line{ transition:none; }
 }
-/* ===== Songs page: remove blank space when searching ===== */
-body.searching #recently-section{ display:none; }
 
-.results-head{ margin-top:70px; }
-body.searching .results-head{ margin-top:18px; }
+/* =========================
+   SEARCH STATE (songs.html)
+   搜尋時：Recently 真正消失 + 結果區塊上移（消除留白）
+   ✅ 只用 display:none，避免你遇到「變暗不能按但還佔位」的狀況
+========================= */
+
+/* 搜尋中：整段 Recently 不佔位 */
+body.searching #recently-section{
+  display: none !important;
+}
+
+/* Results head 預設距離（你原本想要 70px） */
+.results-head{
+  margin-top: 70px;
+}
+
+/* 搜尋中：把結果往上拉，消掉空白 */
+body.searching .results-head{
+  margin-top: 18px;
+}
+
+/* 額外防呆：避免某些瀏覽器/舊 CSS 仍對 recently 做 opacity/pointer-events */
+body.searching #recently-section *{
+  pointer-events: none;
+}
