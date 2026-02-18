@@ -26,9 +26,10 @@
     <div class="container search-hero-inner">
       <div class="hero-kicker">LABEL P / LYRICS & CULTURE</div>
 
+      <!-- ✅ Premium dynamic headline -->
       <h1 class="search-title">
         FIND A SONG.<br>
-        UNDERSTAND IT.
+        <span id="dynamic-line" class="dynamic-line">UNDERSTAND THE STORY.</span>
       </h1>
 
       <p class="search-sub">
@@ -119,11 +120,100 @@
         recentlySection.style.display = hasText ? "none" : "";
       }
 
-      // 初始狀態
       toggleRecently();
-
-      // 打字時
       input?.addEventListener("input", toggleRecently);
+    })();
+  </script>
+
+  <!-- ✅ Premium dynamic headline (silky + no jitter) -->
+  <script>
+    (function () {
+      const el = document.getElementById("dynamic-line");
+      if (!el) return;
+
+      const lines = [
+        "UNDERSTAND THE STORY.",
+        "UNDERSTAND THE SLANG.",
+        "UNDERSTAND THE CULTURE."
+      ];
+
+      const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+      let i = 0;
+      let timer = null;
+
+      // 初始狀態
+      el.classList.add("is-in");
+
+      // ✅ 量出最寬文字，固定寬度，避免左右抖動
+      function lockWidth() {
+        const prevText = el.textContent;
+        const prevWidth = el.getBoundingClientRect().width;
+
+        const meas = el.cloneNode(true);
+        meas.style.visibility = "hidden";
+        meas.style.position = "absolute";
+        meas.style.left = "-9999px";
+        meas.style.top = "-9999px";
+        meas.style.width = "auto";
+        meas.style.maxWidth = "none";
+        meas.classList.remove("is-out", "is-in");
+        document.body.appendChild(meas);
+
+        let max = prevWidth;
+        for (const t of lines) {
+          meas.textContent = t;
+          max = Math.max(max, meas.getBoundingClientRect().width);
+        }
+
+        document.body.removeChild(meas);
+
+        el.style.display = "inline-block";
+        el.style.width = Math.ceil(max) + "px";
+        el.textContent = prevText;
+      }
+
+      if (document.fonts && document.fonts.ready) {
+        document.fonts.ready.then(lockWidth).catch(lockWidth);
+      } else {
+        window.addEventListener("load", lockWidth, { once: true });
+      }
+
+      function setText(nextIndex) {
+        el.textContent = lines[nextIndex];
+      }
+
+      function swap() {
+        if (prefersReduced) {
+          i = (i + 1) % lines.length;
+          setText(i);
+          return;
+        }
+
+        el.classList.remove("is-in");
+        el.classList.add("is-out");
+
+        window.setTimeout(() => {
+          i = (i + 1) % lines.length;
+          setText(i);
+
+          requestAnimationFrame(() => {
+            el.classList.remove("is-out");
+            el.classList.add("is-in");
+          });
+        }, 260);
+      }
+
+      timer = window.setInterval(swap, 3600);
+
+      document.addEventListener("visibilitychange", () => {
+        if (document.hidden) {
+          clearInterval(timer);
+          timer = null;
+        } else if (!timer) {
+          timer = window.setInterval(swap, 3600);
+        }
+      });
     })();
   </script>
 
