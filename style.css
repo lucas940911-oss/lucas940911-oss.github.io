@@ -578,3 +578,28 @@ img, video, iframe { max-width: 100%; height: auto; }
   outline: 2px solid rgba(0,224,255,0.65);
   outline-offset: 3px;
 }
+/* ===== Dynamic headline: centered + premium (no jitter) ===== */
+.search-title { text-align: center; }
+
+.dynamic-wrap{
+  display: block;                 /* 佔滿一整行 */
+  width: min(760px, 100%);        /* 跟你的 search-input 同寬感 */
+  margin: 0 auto;                 /* 置中容器 */
+  overflow: hidden;               /* 保險：避免任何溢出造成水平捲動 */
+}
+
+.dynamic-line{
+  display: inline-block;          /* 讓 transform/opacity 平滑 */
+  text-align: center;             /* 文字在容器中間 */
+  white-space: nowrap;            /* 你要 B：不換行 */
+  margin: 0 auto;
+}
+
+/* 手機：縮字保證不溢出 */
+@media (max-width: 600px){
+  .dynamic-wrap{ width: 100%; }
+  .dynamic-line{
+    font-size: clamp(1.05rem, 6.6vw, 2.0rem);
+    letter-spacing: 0.9px;
+  }
+}
