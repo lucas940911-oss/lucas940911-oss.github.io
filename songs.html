@@ -4,7 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>翻譯歌曲 — Label P</title>
-  <link rel="stylesheet" href="style.css">
+
+  <!-- ✅ 防快取：每次你改 style.css，就把版本號最後一段改掉 -->
+  <link rel="stylesheet" href="style.css?v=20260218-1">
 </head>
 <body>
 
@@ -125,7 +127,7 @@
     })();
   </script>
 
-  <!-- ✅ Premium dynamic headline (silky + no jitter) -->
+  <!-- ✅ Premium dynamic headline (silky + mobile-safe) -->
   <script>
     (function () {
       const el = document.getElementById("dynamic-line");
@@ -138,17 +140,22 @@
       ];
 
       const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const isMobile = () => window.matchMedia("(max-width: 600px)").matches;
 
       let i = 0;
       let timer = null;
 
-      // 初始狀態
       el.classList.add("is-in");
 
-      // ✅ 量出最寬文字，固定寬度，避免左右抖動
+      // ✅ 桌機鎖寬避免抖動；手機不鎖寬避免溢出
       function lockWidth() {
+        // 手機：不鎖寬（你要 B：不換行 + 縮字）
+        if (isMobile()) {
+          el.style.width = "";
+          return;
+        }
+
         const prevText = el.textContent;
-        const prevWidth = el.getBoundingClientRect().width;
 
         const meas = el.cloneNode(true);
         meas.style.visibility = "hidden";
@@ -160,7 +167,7 @@
         meas.classList.remove("is-out", "is-in");
         document.body.appendChild(meas);
 
-        let max = prevWidth;
+        let max = 0;
         for (const t of lines) {
           meas.textContent = t;
           max = Math.max(max, meas.getBoundingClientRect().width);
@@ -173,11 +180,18 @@
         el.textContent = prevText;
       }
 
+      // 字體載入後再量一次（Impact / 系統字會影響寬度）
       if (document.fonts && document.fonts.ready) {
         document.fonts.ready.then(lockWidth).catch(lockWidth);
       } else {
         window.addEventListener("load", lockWidth, { once: true });
       }
+
+      // ✅ 旋轉 / resize 要重算（手機最重要）
+      window.addEventListener("resize", () => {
+        // 用 rAF 避免連續 resize 卡頓
+        window.requestAnimationFrame(lockWidth);
+      });
 
       function setText(nextIndex) {
         el.textContent = lines[nextIndex];
@@ -196,6 +210,10 @@
         window.setTimeout(() => {
           i = (i + 1) % lines.length;
           setText(i);
+
+          // 桌機才需要鎖寬（避免換字後抖動）
+          // 手機不鎖寬，避免爆版
+          lockWidth();
 
           requestAnimationFrame(() => {
             el.classList.remove("is-out");
