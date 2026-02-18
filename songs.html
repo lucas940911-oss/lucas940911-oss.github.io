@@ -120,19 +120,30 @@
   <!-- Search Script -->
   <script src="search.js"></script>
 
-  <!-- ✅ Recently 自動隱藏邏輯：有輸入就隱藏，清空就顯示（改成 body class 控制，避免留白） -->
+  <!-- ✅ Recently 自動隱藏：雙保險（body class + inline display none） -->
   <script>
     (function () {
       const input = document.getElementById("search");
+      const recentlySection = document.getElementById("recently-section");
 
       function toggleSearching() {
         if (!input) return;
         const hasText = input.value.trim().length > 0;
+
+        // 1) CSS 狀態用（給你 style.css 控制間距）
         document.body.classList.toggle("searching", hasText);
+
+        // 2) 雙保險：就算 CSS 沒吃到，也會真的消失
+        if (recentlySection) {
+          recentlySection.style.display = hasText ? "none" : "";
+        }
       }
 
       toggleSearching();
-      input?.addEventListener("input", toggleSearching);
+      input.addEventListener("input", toggleSearching);
+
+      // iOS/Safari 有時自動填字/語音輸入走 change
+      input.addEventListener("change", toggleSearching);
     })();
   </script>
 
@@ -142,7 +153,6 @@
       const el = document.getElementById("dynamic-line");
       if (!el) return;
 
-      // ✅ 清掉舊版可能殘留的 inline width
       el.style.width = "";
 
       const lines = [
