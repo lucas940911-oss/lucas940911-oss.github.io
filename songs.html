@@ -6,7 +6,7 @@
   <title>翻譯歌曲 — Label P</title>
 
   <!-- ✅ 防快取：每次你改 style.css，就把版本號最後一段改掉 -->
-  <link rel="stylesheet" href="style.css?v=20260218-1">
+  <link rel="stylesheet" href="style.css?v=20260218-2">
 </head>
 <body>
 
@@ -28,12 +28,12 @@
     <div class="container search-hero-inner">
       <div class="hero-kicker">LABEL P / LYRICS & CULTURE</div>
 
-      <!-- ✅ Premium dynamic headline -->
+      <!-- ✅ Premium dynamic headline (fixed: two lines same scale + always centered) -->
       <h1 class="search-title">
-        FIND A SONG.<br>
+        <span class="title-line">FIND A SONG.</span><br>
         <span class="dynamic-wrap">
-  <span id="dynamic-line" class="dynamic-line">UNDERSTAND THE STORY.</span>
-</span>
+          <span id="dynamic-line" class="dynamic-line">UNDERSTAND THE STORY.</span>
+        </span>
       </h1>
 
       <p class="search-sub">
@@ -42,7 +42,15 @@
 
       <!-- 搜尋欄 -->
       <div class="search-bar">
-        <input id="search" class="search-input" type="text" placeholder="Search artist or song">
+        <input
+          id="search"
+          class="search-input"
+          type="text"
+          placeholder="Search artist or song"
+          autocapitalize="off"
+          autocorrect="off"
+          spellcheck="false"
+        >
       </div>
 
       <!-- Trending chips -->
@@ -129,12 +137,13 @@
     })();
   </script>
 
-  <!-- ✅ Premium dynamic headline (silky + mobile-safe) -->
+  <!-- ✅ Dynamic headline (fixed: no lockWidth, no jitter, no overflow) -->
   <script>
     (function () {
       const el = document.getElementById("dynamic-line");
       if (!el) return;
-      
+
+      // ✅ 清掉舊版可能殘留的 inline width
       el.style.width = "";
 
       const lines = [
@@ -144,58 +153,11 @@
       ];
 
       const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-      const isMobile = () => window.matchMedia("(max-width: 600px)").matches;
 
       let i = 0;
       let timer = null;
 
       el.classList.add("is-in");
-
-      // ✅ 桌機鎖寬避免抖動；手機不鎖寬避免溢出
-      function lockWidth() {
-        // 手機：不鎖寬（你要 B：不換行 + 縮字）
-        if (isMobile()) {
-          el.style.width = "";
-          return;
-        }
-
-        const prevText = el.textContent;
-
-        const meas = el.cloneNode(true);
-        meas.style.visibility = "hidden";
-        meas.style.position = "absolute";
-        meas.style.left = "-9999px";
-        meas.style.top = "-9999px";
-        meas.style.width = "auto";
-        meas.style.maxWidth = "none";
-        meas.classList.remove("is-out", "is-in");
-        document.body.appendChild(meas);
-
-        let max = 0;
-        for (const t of lines) {
-          meas.textContent = t;
-          max = Math.max(max, meas.getBoundingClientRect().width);
-        }
-
-        document.body.removeChild(meas);
-
-        el.style.display = "inline-block";
-        el.style.width = Math.ceil(max) + "px";
-        el.textContent = prevText;
-      }
-
-      // 字體載入後再量一次（Impact / 系統字會影響寬度）
-      if (document.fonts && document.fonts.ready) {
-        document.fonts.ready.then(lockWidth).catch(lockWidth);
-      } else {
-        window.addEventListener("load", lockWidth, { once: true });
-      }
-
-      // ✅ 旋轉 / resize 要重算（手機最重要）
-      window.addEventListener("resize", () => {
-        // 用 rAF 避免連續 resize 卡頓
-        window.requestAnimationFrame(lockWidth);
-      });
 
       function setText(nextIndex) {
         el.textContent = lines[nextIndex];
@@ -214,10 +176,6 @@
         window.setTimeout(() => {
           i = (i + 1) % lines.length;
           setText(i);
-
-          // 桌機才需要鎖寬（避免換字後抖動）
-          // 手機不鎖寬，避免爆版
-          lockWidth();
 
           requestAnimationFrame(() => {
             el.classList.remove("is-out");
