@@ -603,3 +603,42 @@ img, video, iframe { max-width: 100%; height: auto; }
     letter-spacing: 0.9px;
   }
 }
+/* ===== Dynamic headline: always centered on ALL devices ===== */
+.search-title { text-align: center; }
+
+/* ✅ 用 flex 做絕對置中，不吃文字長短影響 */
+.dynamic-wrap{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: min(760px, 100%);
+  margin: 0 auto;
+
+  overflow: hidden; /* 保險：避免任何溢出造成水平捲動 */
+}
+
+/* ✅ 清掉「以前 lockWidth 寫進去的 inline width」的影響 */
+.dynamic-line{
+  display: inline-block;
+  white-space: nowrap;
+  width: auto !important;
+  max-width: 100%;
+  text-align: center;
+}
+
+/* 手機：B（不換行）→ 用縮字解決 */
+@media (max-width: 600px){
+  .dynamic-line{
+    font-size: clamp(1.05rem, 6.6vw, 2.0rem);
+    letter-spacing: 0.9px;
+  }
+}
+
+/* 超小手機再收一點（iPhone SE 類） */
+@media (max-width: 390px){
+  .dynamic-line{
+    font-size: clamp(1.0rem, 7.0vw, 1.75rem);
+    letter-spacing: 0.8px;
+  }
+}
