@@ -344,8 +344,9 @@ body {
     padding: 11px 22px;
   }
 }
+
 /* =========================
-   SONGS PAGE ONLY (A + C)
+   SONGS PAGE ONLY
    只影響 songs.html 的搜尋頁
 ========================= */
 
@@ -370,16 +371,6 @@ body {
   margin-bottom: 14px;
 }
 
-/* 主標 */
-.search-title {
-  font-family: Impact, sans-serif;
-  text-align: center;
-  margin: 0 0 12px 0;
-  letter-spacing: 2px;
-  line-height: 1.05;
-  font-size: clamp(2.3rem, 6vw, 4.2rem);
-}
-
 /* 副標 */
 .search-sub {
   max-width: 760px;
@@ -395,7 +386,7 @@ body {
   margin-top: 12px;
 }
 
-/* ✅ 這個是關鍵：你 songs.html 用的是 .search-input，不是 .input */
+/* ✅ songs.html 用的是 .search-input，不是 .input */
 .search-input {
   width: 100%;
   max-width: 760px;
@@ -495,10 +486,6 @@ body {
     padding: 40px 16px 28px;
   }
 
-  .search-title {
-    font-size: 2.2rem;
-  }
-
   .search-input {
     padding: 16px 14px;
     font-size: 1.02rem;
@@ -515,130 +502,120 @@ body {
   }
 }
 
-.dynamic-line{
-  display:inline-block;
-  white-space:nowrap;
-  will-change:opacity,transform;
-  transition:opacity 260ms ease, transform 260ms ease;
-}
-.dynamic-line.is-out{opacity:0; transform:translateY(6px);}
-.dynamic-line.is-in{opacity:1; transform:translateY(0);}
-@media (prefers-reduced-motion: reduce){
-  .dynamic-line{transition:none;}
-}
-
 /* =========================
-   SAFE OVERRIDES (to prevent "no-style / cache / overflow" issues)
-   只做防呆與跨設備穩定，不改你原本風格
+   SAFE OVERRIDES
+   防呆與跨設備穩定，不改你原本風格
 ========================= */
 
-/* 1) 防止任何水平爆版（手機最常見） */
+/* 防止任何水平爆版（手機最常見） */
+html { -webkit-text-size-adjust: 100%; }
 html, body { overflow-x: hidden; }
 
-/* 2) 任何媒體都不要超出容器 */
+/* 任何媒體都不要超出容器 */
 img, video, iframe { max-width: 100%; height: auto; }
 
-/* 3) 超窄螢幕不要硬塞 280px 卡片（避免左右滑動） */
+/* 超窄螢幕不要硬塞 280px 卡片（避免左右滑動） */
 @media (max-width: 360px) {
   .grid { grid-template-columns: 1fr; }
 }
 
-/* 4) Dynamic line：字體繼承，避免不同瀏覽器粗細跳動 */
-.dynamic-line{
-  font: inherit;
-  -webkit-font-smoothing: inherit;
-}
-
-/* 5) B：手機不換行 → 用縮字解決不溢出 */
-.search-title .dynamic-line { white-space: nowrap; }
-
-@media (max-width: 820px) {
-  /* 稍微收斂字距，降低爆版機率（只影響 songs hero 標題） */
-  .search-title { letter-spacing: 1.4px; }
-}
-
-@media (max-width: 600px) {
-  .search-title { letter-spacing: 1px; }
-
-  .search-title .dynamic-line{
-    font-size: clamp(1.15rem, 6.2vw, 2.0rem);
-    letter-spacing: 0.9px;
-  }
-}
-
-@media (max-width: 390px) {
-  .search-title .dynamic-line{
-    font-size: clamp(1.05rem, 6.6vw, 1.8rem);
-    letter-spacing: 0.8px;
-  }
-}
-
-/* 6) 更好的鍵盤 focus（不影響滑鼠外觀） */
+/* 更好的鍵盤 focus（不影響滑鼠外觀） */
 :focus-visible {
   outline: 2px solid rgba(0,224,255,0.65);
   outline-offset: 3px;
 }
-/* ===== Dynamic headline: centered + premium (no jitter) ===== */
-.search-title { text-align: center; }
 
-.dynamic-wrap{
-  display: block;                 /* 佔滿一整行 */
-  width: min(760px, 100%);        /* 跟你的 search-input 同寬感 */
-  margin: 0 auto;                 /* 置中容器 */
-  overflow: hidden;               /* 保險：避免任何溢出造成水平捲動 */
+/* =========================
+   HERO TITLE SYSTEM (songs.html)
+   兩行同字級 + 永遠置中 + 自適應
+========================= */
+
+:root{
+  /* 兩行共同字級（桌機～平板） */
+  --hero-title: clamp(2.0rem, 6.2vw, 4.2rem);
+  --hero-line-height: 1.05;
+  --hero-letter: 2px;
+  --hero-max: 760px;
+
+  /* 動畫 */
+  --hero-dur: 260ms;
+  --hero-shift: 6px;
 }
 
-.dynamic-line{
-  display: inline-block;          /* 讓 transform/opacity 平滑 */
-  text-align: center;             /* 文字在容器中間 */
-  white-space: nowrap;            /* 你要 B：不換行 */
-  margin: 0 auto;
+/* 主標容器 */
+.search-title{
+  text-align: center;
+  line-height: var(--hero-line-height);
+  letter-spacing: var(--hero-letter);
+  margin: 0 0 12px 0;
 }
 
-/* 手機：縮字保證不溢出 */
-@media (max-width: 600px){
-  .dynamic-wrap{ width: 100%; }
-  .dynamic-line{
-    font-size: clamp(1.05rem, 6.6vw, 2.0rem);
-    letter-spacing: 0.9px;
-  }
+/* 第一行（你 songs.html 需要 <span class="title-line">FIND A SONG.</span>） */
+.search-title .title-line{
+  display: inline-block;
+  font-size: var(--hero-title);
+  font-family: Impact, sans-serif;
+  font-weight: 400;
 }
-/* ===== Dynamic headline: always centered on ALL devices ===== */
-.search-title { text-align: center; }
 
-/* ✅ 用 flex 做絕對置中，不吃文字長短影響 */
+/* 第二行：固定置中容器 */
 .dynamic-wrap{
   display: flex;
   justify-content: center;
   align-items: center;
-
-  width: min(760px, 100%);
+  width: min(var(--hero-max), 100%);
   margin: 0 auto;
-
-  overflow: hidden; /* 保險：避免任何溢出造成水平捲動 */
+  overflow: hidden;
 }
 
-/* ✅ 清掉「以前 lockWidth 寫進去的 inline width」的影響 */
+/* 第二行文字：同字級 + 不換行 + 清掉舊鎖寬 */
 .dynamic-line{
   display: inline-block;
+  font-size: var(--hero-title);
+  font-family: Impact, sans-serif;
+  font-weight: 400;
+
   white-space: nowrap;
   width: auto !important;
   max-width: 100%;
   text-align: center;
+
+  will-change: opacity, transform;
+  transition: opacity var(--hero-dur) ease, transform var(--hero-dur) ease;
 }
 
-/* 手機：B（不換行）→ 用縮字解決 */
+.dynamic-line.is-out{ opacity:0; transform: translateY(var(--hero-shift)); }
+.dynamic-line.is-in { opacity:1; transform: translateY(0); }
+
+@media (max-width: 820px){
+  :root{ --hero-letter: 1.4px; }
+}
+
+/* 手機：兩行一起縮（同變數） */
 @media (max-width: 600px){
-  .dynamic-line{
-    font-size: clamp(1.05rem, 6.6vw, 2.0rem);
-    letter-spacing: 0.9px;
+  :root{
+    --hero-title: clamp(1.35rem, 7.2vw, 2.2rem);
+    --hero-letter: 1px;
+    --hero-shift: 5px;
   }
 }
 
-/* 超小手機再收一點（iPhone SE 類） */
+/* 小手機（iPhone SE 類） */
 @media (max-width: 390px){
-  .dynamic-line{
-    font-size: clamp(1.0rem, 7.0vw, 1.75rem);
-    letter-spacing: 0.8px;
+  :root{
+    --hero-title: clamp(1.25rem, 7.6vw, 2.0rem);
+    --hero-letter: 0.9px;
   }
+}
+
+/* 極小螢幕保底 */
+@media (max-width: 340px){
+  :root{
+    --hero-title: clamp(1.15rem, 8.0vw, 1.85rem);
+    --hero-letter: 0.8px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce){
+  .dynamic-line{ transition:none; }
 }
