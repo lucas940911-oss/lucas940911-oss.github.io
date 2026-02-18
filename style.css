@@ -619,3 +619,8 @@ img, video, iframe { max-width: 100%; height: auto; }
 @media (prefers-reduced-motion: reduce){
   .dynamic-line{ transition:none; }
 }
+/* ===== Songs page: remove blank space when searching ===== */
+body.searching #recently-section{ display:none; }
+
+.results-head{ margin-top:70px; }
+body.searching .results-head{ margin-top:18px; }
