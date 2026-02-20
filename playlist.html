@@ -1,16 +1,17 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>影片歌單 — Label P</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>官方連結 — Label P</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
-
 <body>
+
+  <!-- Navbar（沿用你原本的四個導覽） -->
   <nav class="navbar">
     <div class="nav-container">
-      <a href="index.html" class="nav-logo">LABEL P</a>
+      <a class="nav-logo" href="index.html">LABEL P</a>
       <div class="nav-links">
         <a href="songs.html">翻譯歌曲</a>
         <a href="playlist.html">影片歌單</a>
@@ -20,41 +21,33 @@
     </div>
   </nav>
 
-  <section class="dark">
-    <div class="container">
-      <h2 class="section-title">影片歌單</h2>
+  <!-- Link Hub -->
+  <main class="container">
+    <section class="linkhub">
+      <h1 class="section-title">官方連結</h1>
+      <p class="linkhub-sub">
+        追蹤 Label P、看 Reels、合作聯絡都在這裡。
+      </p>
 
-      <noscript>
-        <div style="margin: 10px 0; padding: 12px; border: 1px solid #ddd; border-radius: 12px; opacity: .9;">
-          這個頁面需要啟用 JavaScript 才能載入歌單內容。
-        </div>
-      </noscript>
-
-      <!-- 工具列：搜尋 + 歌手篩選 -->
-      <div class="playlist-toolbar" style="display:flex; gap:10px; flex-wrap:wrap; margin: 12px 0 18px;">
-        <input
-          id="q"
-          type="text"
-          placeholder="搜尋歌名 / 歌手…"
-          autocomplete="off"
-          style="padding:10px 12px; border:1px solid #ddd; border-radius:10px; min-width:220px;"
-        >
-        <select
-          id="artist"
-          style="padding:10px 12px; border:1px solid #ddd; border-radius:10px;"
-        >
-          <option value="">全部歌手</option>
-        </select>
+      <div class="linkhub-grid">
+        <!-- ✅ 把 # 改成你的真正連結 -->
+        <a class="linkhub-btn" href="#" target="_blank" rel="noopener">Instagram（主帳號）</a>
+        <a class="linkhub-btn" href="#" target="_blank" rel="noopener">Instagram（Reels/精選）</a>
+        <a class="linkhub-btn" href="#" target="_blank" rel="noopener">YouTube</a>
+        <a class="linkhub-btn" href="#" target="_blank" rel="noopener">TikTok</a>
+        <a class="linkhub-btn" href="#" target="_blank" rel="noopener">Spotify / Playlist</a>
+        <a class="linkhub-btn" href="#" target="_blank" rel="noopener">Apple Music</a>
+        <a class="linkhub-btn" href="merch.html">周邊商品</a>
+        <a class="linkhub-btn" href="mailto:your@email.com">合作聯絡（Email）</a>
       </div>
 
-      <!-- 自動渲染結果 -->
-      <div id="grid" class="grid" aria-live="polite"></div>
+      <div class="linkhub-note">
+        <span>提示：</span> 你如果還沒決定標題，先放「官方連結」最安全；之後要改名只改這頁標題即可。
+      </div>
+    </section>
+  </main>
 
-      <!-- 錯誤/載入提示 -->
-      <div id="msg" style="margin-top:14px; opacity:.8;" aria-live="polite"></div>
-    </div>
-  </section>
-
+  <!-- Footer（精簡版，沿用你 style.css 的 footer 結構） -->
   <footer class="footer">
     <div class="footer-container">
       <div class="footer-nav">
@@ -70,19 +63,17 @@
         </div>
         <div class="footer-group">
           <h4>社群</h4>
-          <a href="mailto:labelpworkspace@gmail.com">聯絡合作</a>
-          <a href="https://www.instagram.com/labelplyrics" target="_blank" rel="noreferrer">Instagram</a>
+          <a href="#" target="_blank" rel="noopener">Instagram</a>
         </div>
       </div>
     </div>
-
     <div class="footer-bottom">
-      <p>&copy; 2025 LABEL P WORKSPACE. All Rights Reserved.</p>
+      <p>© 2025 LABEL P WORKSPACE. All Rights Reserved.</p>
     </div>
   </footer>
 
-  <!-- ✅ 先載入 playlist.js 生成 blockquote，再讓 IG script process -->
-  <script src="playlist.js"></script>
-  <script async src="https://www.instagram.com/embed.js"></script>
+  <!-- ⚠️ 重要：不要再載入 playlist.js（你已經不做影片歌單） -->
+  <!-- <script src="playlist.js"></script> -->
+
 </body>
 </html>
