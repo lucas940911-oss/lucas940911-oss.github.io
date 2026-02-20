@@ -746,13 +746,9 @@ body.searching #recently-section *{
   line-height: 1.7;
 }
 .official-avatar-img{
-  width: 84px;
-  height: 84px;
-  object-fit: cover;
-  border-radius: 22px;
+  width: 56px;
+  height: 56px;
+  object-fit: contain;   /* ⭐ 這行很重要 */
   display: block;
   margin: 0 auto 14px;
-  border: 1px solid rgba(255,255,255,0.14);
-  background: rgba(18,18,18,0.92);
-  box-shadow: 0 0 0 6px rgba(0,224,255,0.08);
 }
