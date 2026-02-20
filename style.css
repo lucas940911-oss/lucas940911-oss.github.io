@@ -645,3 +645,103 @@ body.searching .results-head{
 body.searching #recently-section *{
   pointer-events: none;
 }
+/* ========================= 官方帳號頁（品牌版） ========================= */
+.official { max-width: 820px; margin: 0 auto; padding-bottom: 30px; }
+
+.official-hero{
+  text-align: center;
+  padding: 26px 10px 6px;
+}
+
+.official-avatar{
+  width: 84px;
+  height: 84px;
+  margin: 0 auto 14px;
+  border-radius: 22px;
+  display: grid;
+  place-items: center;
+  font-weight: 900;
+  letter-spacing: 1px;
+  border: 1px solid rgba(255,255,255,0.14);
+  background: rgba(18,18,18,0.92);
+  box-shadow: 0 0 0 6px rgba(0,224,255,0.08);
+}
+
+.official-title{
+  margin: 0;
+  font-size: clamp(1.6rem, 2.6vw, 2.2rem);
+  letter-spacing: 0.8px;
+}
+
+.official-sub{
+  margin: 10px auto 0;
+  max-width: 560px;
+  color: rgba(255,255,255,0.68);
+  line-height: 1.7;
+  font-weight: 600;
+}
+
+.official-grid{
+  display: grid;
+  gap: 14px;
+  margin: 22px auto 0;
+  padding: 0 6px;
+}
+
+.official-btn{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 16px 16px;
+  border-radius: 18px;
+  text-decoration: none;
+  border: 1px solid rgba(255,255,255,0.14);
+  background: rgba(18,18,18,0.92);
+  transition: 0.2s ease;
+}
+
+.official-btn:hover{
+  border-color: rgba(0,224,255,0.6);
+  box-shadow: 0 0 0 5px rgba(0,224,255,0.12);
+  transform: translateY(-1px);
+}
+
+.btn-left{ display: grid; gap: 4px; }
+.btn-title{
+  color: rgba(255,255,255,0.92);
+  font-weight: 900;
+  letter-spacing: 0.4px;
+  font-size: 1.05rem;
+}
+.btn-desc{
+  color: rgba(255,255,255,0.58);
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+.btn-arrow{
+  color: rgba(0,224,255,0.9);
+  font-weight: 900;
+  font-size: 1.1rem;
+}
+
+.official-note{
+  text-align: center;
+  margin-top: 18px;
+  padding: 0 10px;
+}
+
+.official-divider{
+  height: 1px;
+  background: rgba(255,255,255,0.12);
+  margin: 18px auto 14px;
+  max-width: 520px;
+}
+
+.official-mini{
+  margin: 0;
+  color: rgba(255,255,255,0.55);
+  font-weight: 650;
+  line-height: 1.7;
+}
