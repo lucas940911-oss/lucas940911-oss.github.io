@@ -835,3 +835,15 @@ body.searching #recently-section *{
     padding: 40px 0 18px;
   }
 }
+.coming{
+  min-height:70vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.coming-title{
+  font-size: clamp(40px, 6vw, 72px);
+  font-weight:600;
+  letter-spacing:.04em;
+}
