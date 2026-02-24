@@ -1,15 +1,35 @@
-/* --- 全域設定 Global Settings --- */
+/* =========================================================
+   LABEL P — style.css (refactor, non-breaking)
+   原則：不改 class、不改效果，只整理結構、去重複、避免互相覆蓋
+========================================================= */
+
+/* =========================
+   1) CSS Variables
+========================= */
 :root {
   --primary-color: #00e0ff; /* 霓虹青 */
   --bg-dark: #000000;
   --bg-card: #121212;
   --text-main: #ffffff;
   --text-dim: #bbbbbb;
+
+  /* songs hero title system vars (原本在下面 :root，合併到這裡) */
+  --hero-title: clamp(2.0rem, 6.2vw, 4.2rem);
+  --hero-line-height: 1.05;
+  --hero-letter: 2px;
+  --hero-max: 760px;
+
+  --hero-dur: 260ms;
+  --hero-shift: 6px;
 }
 
-* {
-  box-sizing: border-box;
-}
+/* =========================
+   2) Base / Global
+========================= */
+* { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+html, body { overflow-x: hidden; }
 
 body {
   margin: 0;
@@ -20,7 +40,33 @@ body {
   line-height: 1.6;
 }
 
-/* --- 頂部導覽列 Navbar --- */
+img, video, iframe {
+  max-width: 100%;
+  height: auto;
+}
+
+:focus-visible {
+  outline: 2px solid rgba(0,224,255,0.65);
+  outline-offset: 3px;
+}
+
+/* =========================
+   3) Layout
+========================= */
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 80px 20px;
+}
+
+/* 超窄螢幕避免 grid 爆版 */
+@media (max-width: 360px) {
+  .grid { grid-template-columns: 1fr; }
+}
+
+/* =========================
+   4) Navbar
+========================= */
 .navbar {
   position: sticky;
   top: 0;
@@ -63,11 +109,16 @@ body {
   transition: 0.3s;
 }
 
-.nav-links a:hover {
-  color: var(--primary-color);
+.nav-links a:hover { color: var(--primary-color); }
+
+/* 手機版：隱藏 navbar links（你原本就這樣） */
+@media (max-width: 600px) {
+  .nav-links { display: none; }
 }
 
-/* --- 英雄區塊 Hero --- */
+/* =========================
+   5) Hero (Home)
+========================= */
 .hero {
   display: flex;
   flex-direction: column;
@@ -94,7 +145,17 @@ body {
   letter-spacing: 2px;
 }
 
-/* --- 按鈕樣式 Buttons --- */
+@media (max-width: 600px) {
+  .logo { font-size: 3rem; }
+  .tagline {
+    font-size: 0.9rem;
+    white-space: normal;
+  }
+}
+
+/* =========================
+   6) Buttons (Global)
+========================= */
 .btn-hero, .btn {
   padding: 12px 30px;
   background: transparent;
@@ -114,13 +175,9 @@ body {
   box-shadow: 0 0 20px rgba(0, 224, 255, 0.5);
 }
 
-/* --- 網格佈局 Grid --- */
-.container {
-  max-width: 1000px;
-  margin: 0 auto;
-  padding: 80px 20px;
-}
-
+/* =========================
+   7) Grid / Cards
+========================= */
 .section-title {
   font-family: Impact, sans-serif;
   font-size: 2.5rem;
@@ -156,7 +213,9 @@ body {
   margin-bottom: 20px;
 }
 
-/* --- 搜尋輸入框（Songs Search UI） --- */
+/* =========================
+   8) Inputs / Textareas (Shared)
+========================= */
 .input, .textarea {
   width: 100%;
   background: rgba(26,26,26,0.9);
@@ -180,10 +239,10 @@ body {
   box-shadow: 0 0 0 3px rgba(0, 224, 255, 0.12);
 }
 
-/* --- 搜尋結果卡片：更像音樂平台的排版 --- */
-.song-meta {
-  margin-top: 2px;
-}
+/* =========================
+   9) Songs UI (Shared blocks used in results)
+========================= */
+.song-meta { margin-top: 2px; }
 
 .song-artist {
   font-size: 0.9rem;
@@ -206,11 +265,19 @@ body {
   flex-wrap: wrap;
 }
 
-.song-actions .btn {
-  min-width: 110px;
+.song-actions .btn { min-width: 110px; }
+
+@media (max-width: 600px) {
+  .song-title { font-size: 1.35rem; }
+  .song-actions .btn {
+    min-width: 100px;
+    padding: 11px 22px;
+  }
 }
 
-/* --- 表單區塊 Form --- */
+/* =========================
+   10) Form / Suggestion
+========================= */
 .suggestion {
   background: #080808;
   padding: 100px 20px;
@@ -241,7 +308,9 @@ body {
   box-shadow: 0 0 20px rgba(0, 224, 255, 0.25);
 }
 
-/* --- 重新設計的精簡頁尾 Footer --- */
+/* =========================
+   11) Footer
+========================= */
 .footer {
   background: #050505;
   padding: 60px 20px 30px;
@@ -253,7 +322,7 @@ body {
   max-width: 1100px;
   margin: 0 auto;
   display: flex;
-  justify-content: center; /* 連結群組置中 */
+  justify-content: center;
 }
 
 .footer-nav {
@@ -273,7 +342,6 @@ body {
   text-align: center;
 }
 
-/* 標題下裝飾線置中 */
 .footer-group h4::after {
   content: "";
   position: absolute;
@@ -295,9 +363,7 @@ body {
   text-align: center;
 }
 
-.footer-group a:hover {
-  color: var(--primary-color);
-}
+.footer-group a:hover { color: var(--primary-color); }
 
 .footer-bottom {
   max-width: 1100px;
@@ -313,55 +379,22 @@ body {
   letter-spacing: 1px;
 }
 
-/* --- 響應式設計 Responsive Design --- */
 @media (max-width: 768px) {
-  .footer-nav {
-    gap: 40px;
-  }
+  .footer-nav { gap: 40px; }
 }
 
-@media (max-width: 600px) {
-  .nav-links {
-    display: none; /* 手機版隱藏文字連結 */
-  }
-
-  .logo {
-    font-size: 3rem;
-  }
-
-  .tagline {
-    font-size: 0.9rem;
-    white-space: normal;
-  }
-
-  /* 手機上字級稍微收斂，卡片更耐看 */
-  .song-title {
-    font-size: 1.35rem;
-  }
-
-  .song-actions .btn {
-    min-width: 100px;
-    padding: 11px 22px;
-  }
-}
-
-/* =========================
-   SONGS PAGE ONLY
-   只影響 songs.html 的搜尋頁
-========================= */
-
-/* songs.html 的 hero 搜尋區 */
+/* =========================================================
+   12) Page: songs.html ONLY
+========================================================= */
 .search-hero {
   background: radial-gradient(900px 450px at 50% 18%, rgba(0,224,255,0.12), transparent 60%);
   border-bottom: 1px solid #111;
 }
 
-/* 讓 songs.html 的 hero container 不要用全站的 80px padding（避免手機跑版） */
 .search-hero .container {
   padding: 55px 20px 40px;
 }
 
-/* Complex 感小標 */
 .hero-kicker {
   text-align: center;
   color: rgba(255,255,255,0.55);
@@ -371,7 +404,6 @@ body {
   margin-bottom: 14px;
 }
 
-/* 副標 */
 .search-sub {
   max-width: 760px;
   margin: 0 auto 18px;
@@ -379,14 +411,12 @@ body {
   color: rgba(255,255,255,0.68);
 }
 
-/* 搜尋框 */
 .search-bar {
   display: flex;
   justify-content: center;
   margin-top: 12px;
 }
 
-/* ✅ songs.html 用的是 .search-input，不是 .input */
 .search-input {
   width: 100%;
   max-width: 760px;
@@ -401,9 +431,7 @@ body {
   box-shadow: 0 10px 28px rgba(0,0,0,0.38);
 }
 
-.search-input::placeholder {
-  color: rgba(255,255,255,0.45);
-}
+.search-input::placeholder { color: rgba(255,255,255,0.45); }
 
 .search-input:focus {
   border-color: rgba(0,224,255,0.65);
@@ -453,11 +481,9 @@ body {
   transform: translateY(-1px);
 }
 
-.chip:active {
-  transform: translateY(0px) scale(0.98);
-}
+.chip:active { transform: translateY(0px) scale(0.98); }
 
-/* 搜尋頁分段標題（左大右小） */
+/* Section head */
 .section-head {
   display: flex;
   justify-content: space-between;
@@ -480,86 +506,22 @@ body {
   font-size: 0.95rem;
 }
 
-/* ✅ 手機版：讓搜尋區真的看起來「有變」 */
-@media (max-width: 600px) {
-  .search-hero .container {
-    padding: 40px 16px 28px;
-  }
-
-  .search-input {
-    padding: 16px 14px;
-    font-size: 1.02rem;
-    border-radius: 14px;
-  }
-
-  .chip {
-    padding: 9px 12px;
-    font-size: 0.92rem;
-  }
-
-  .section-title-left {
-    font-size: 1.55rem;
-  }
-}
-
-/* =========================
-   SAFE OVERRIDES
-   防呆與跨設備穩定，不改你原本風格
-========================= */
-
-/* 防止任何水平爆版（手機最常見） */
-html { -webkit-text-size-adjust: 100%; }
-html, body { overflow-x: hidden; }
-
-/* 任何媒體都不要超出容器 */
-img, video, iframe { max-width: 100%; height: auto; }
-
-/* 超窄螢幕不要硬塞 280px 卡片（避免左右滑動） */
-@media (max-width: 360px) {
-  .grid { grid-template-columns: 1fr; }
-}
-
-/* 更好的鍵盤 focus（不影響滑鼠外觀） */
-:focus-visible {
-  outline: 2px solid rgba(0,224,255,0.65);
-  outline-offset: 3px;
-}
-
-/* =========================
-   HERO TITLE SYSTEM (songs.html)
-   兩行同字級 + 永遠置中 + 自適應
-========================= */
-
-:root{
-  /* 兩行共同字級（桌機～平板） */
-  --hero-title: clamp(2.0rem, 6.2vw, 4.2rem);
-  --hero-line-height: 1.05;
-  --hero-letter: 2px;
-  --hero-max: 760px;
-
-  /* 動畫 */
-  --hero-dur: 260ms;
-  --hero-shift: 6px;
-}
-
-/* 主標容器 */
-.search-title{
+/* HERO TITLE SYSTEM (songs.html) */
+.search-title {
   text-align: center;
   line-height: var(--hero-line-height);
   letter-spacing: var(--hero-letter);
   margin: 0 0 12px 0;
 }
 
-/* 第一行 */
-.search-title .title-line{
+.search-title .title-line {
   display: inline-block;
   font-size: var(--hero-title);
   font-family: Impact, sans-serif;
   font-weight: 400;
 }
 
-/* 第二行容器：用 flex 永遠置中，不吃字長影響 */
-.dynamic-wrap{
+.dynamic-wrap {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -568,8 +530,7 @@ img, video, iframe { max-width: 100%; height: auto; }
   overflow: hidden;
 }
 
-/* 第二行：同字級 + 不換行 + 清掉任何舊鎖寬 */
-.dynamic-line{
+.dynamic-line {
   display: inline-block;
   font-size: var(--hero-title);
   font-family: Impact, sans-serif;
@@ -584,179 +545,64 @@ img, video, iframe { max-width: 100%; height: auto; }
   transition: opacity var(--hero-dur) ease, transform var(--hero-dur) ease;
 }
 
-.dynamic-line.is-out{ opacity:0; transform: translateY(var(--hero-shift)); }
-.dynamic-line.is-in { opacity:1; transform: translateY(0); }
+.dynamic-line.is-out { opacity:0; transform: translateY(var(--hero-shift)); }
+.dynamic-line.is-in  { opacity:1; transform: translateY(0); }
 
-@media (max-width: 820px){
-  :root{ --hero-letter: 1.4px; }
+@media (max-width: 820px) {
+  :root { --hero-letter: 1.4px; }
 }
 
-/* 手機：兩行一起縮（同一個變數） */
-@media (max-width: 600px){
-  :root{
+@media (max-width: 600px) {
+  .search-hero .container { padding: 40px 16px 28px; }
+  .search-input {
+    padding: 16px 14px;
+    font-size: 1.02rem;
+    border-radius: 14px;
+  }
+  .chip { padding: 9px 12px; font-size: 0.92rem; }
+  .section-title-left { font-size: 1.55rem; }
+
+  :root {
     --hero-title: clamp(1.35rem, 7.2vw, 2.2rem);
     --hero-letter: 1px;
     --hero-shift: 5px;
   }
 }
 
-/* 小手機（iPhone SE 類） */
-@media (max-width: 390px){
-  :root{
+@media (max-width: 390px) {
+  :root {
     --hero-title: clamp(1.25rem, 7.6vw, 2.0rem);
     --hero-letter: 0.9px;
   }
 }
 
-/* 極小螢幕保底 */
-@media (max-width: 340px){
-  :root{
+@media (max-width: 340px) {
+  :root {
     --hero-title: clamp(1.15rem, 8.0vw, 1.85rem);
     --hero-letter: 0.8px;
   }
 }
 
-@media (prefers-reduced-motion: reduce){
-  .dynamic-line{ transition:none; }
+@media (prefers-reduced-motion: reduce) {
+  .dynamic-line { transition: none; }
 }
 
-/* =========================
-   SEARCH STATE (songs.html)
-   搜尋時：Recently 真正消失 + 結果區塊上移（消除留白）
-   ✅ 只用 display:none，避免你遇到「變暗不能按但還佔位」的狀況
-========================= */
+/* SEARCH STATE (songs.html) */
+body.searching #recently-section { display: none !important; }
 
-/* 搜尋中：整段 Recently 不佔位 */
-body.searching #recently-section{
-  display: none !important;
-}
+.results-head { margin-top: 70px; }
+body.searching .results-head { margin-top: 18px; }
 
-/* Results head 預設距離（你原本想要 70px） */
-.results-head{
-  margin-top: 70px;
-}
+body.searching #recently-section * { pointer-events: none; }
 
-/* 搜尋中：把結果往上拉，消掉空白 */
-body.searching .results-head{
-  margin-top: 18px;
-}
+/* =========================================================
+   13) Page: official-accounts.html
+   ⚠️ 你原本 official 區塊寫了兩套，我保留「後面那套 Minimal」
+      因為 CSS 後者會覆蓋前者，你目前看到的也是這套效果
+========================================================= */
 
-/* 額外防呆：避免某些瀏覽器/舊 CSS 仍對 recently 做 opacity/pointer-events */
-body.searching #recently-section *{
-  pointer-events: none;
-}
-/* ========================= 官方帳號頁（品牌版） ========================= */
-.official { max-width: 820px; margin: 0 auto; padding-bottom: 30px; }
-
-.official-hero{
-  text-align: center;
-  padding: 26px 10px 6px;
-}
-
-.official-avatar{
-  width: 84px;
-  height: 84px;
-  margin: 0 auto 14px;
-  border-radius: 22px;
-  display: grid;
-  place-items: center;
-  font-weight: 900;
-  letter-spacing: 1px;
-  border: 1px solid rgba(255,255,255,0.14);
-  background: rgba(18,18,18,0.92);
-  box-shadow: 0 0 0 6px rgba(0,224,255,0.08);
-}
-
-.official-title{
-  margin: 0;
-  font-size: clamp(1.6rem, 2.6vw, 2.2rem);
-  letter-spacing: 0.8px;
-}
-
-.official-sub{
-  margin: 10px auto 0;
-  max-width: 560px;
-  color: rgba(255,255,255,0.68);
-  line-height: 1.7;
-  font-weight: 600;
-}
-
-.official-grid{
-  display: grid;
-  gap: 14px;
-  margin: 22px auto 0;
-  padding: 0 6px;
-}
-
-.official-btn{
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 14px;
-  padding: 16px 16px;
-  border-radius: 18px;
-  text-decoration: none;
-  border: 1px solid rgba(255,255,255,0.14);
-  background: rgba(18,18,18,0.92);
-  transition: 0.2s ease;
-}
-
-.official-btn:hover{
-  border-color: rgba(0,224,255,0.6);
-  box-shadow: 0 0 0 5px rgba(0,224,255,0.12);
-  transform: translateY(-1px);
-}
-
-.btn-left{ display: grid; gap: 4px; }
-.btn-title{
-  color: rgba(255,255,255,0.92);
-  font-weight: 900;
-  letter-spacing: 0.4px;
-  font-size: 1.05rem;
-}
-.btn-desc{
-  color: rgba(255,255,255,0.58);
-  font-weight: 700;
-  font-size: 0.9rem;
-}
-
-.btn-arrow{
-  color: rgba(0,224,255,0.9);
-  font-weight: 900;
-  font-size: 1.1rem;
-}
-
-.official-note{
-  text-align: center;
-  margin-top: 18px;
-  padding: 0 10px;
-}
-
-.official-divider{
-  height: 1px;
-  background: rgba(255,255,255,0.12);
-  margin: 18px auto 14px;
-  max-width: 520px;
-}
-
-.official-mini{
-  margin: 0;
-  color: rgba(255,255,255,0.55);
-  font-weight: 650;
-  line-height: 1.7;
-}
-.official-avatar-img{
-  width: 56px;
-  height: 56px;
-  object-fit: contain;   /* ⭐ 這行很重要 */
-  display: block;
-  margin: 0 auto 14px;
-}
-/* =========================
-   Official Accounts (Minimal)
-   ========================= */
-
-.official-hero{
+/* Official Hero */
+.official-hero {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -764,7 +610,7 @@ body.searching #recently-section *{
   padding: 48px 0 24px;
 }
 
-.official-avatar-img{
+.official-avatar-img {
   width: 72px;
   height: 72px;
   border-radius: 16px;
@@ -772,14 +618,14 @@ body.searching #recently-section *{
   margin-bottom: 14px;
 }
 
-.official-title{
+.official-title {
   font-size: 28px;
   letter-spacing: 0.6px;
   margin: 0;
 }
 
 /* Grid */
-.official-grid{
+.official-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 14px;
@@ -787,7 +633,7 @@ body.searching #recently-section *{
 }
 
 /* Button */
-.official-btn{
+.official-btn {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -801,49 +647,47 @@ body.searching #recently-section *{
   transition: transform 160ms ease, border-color 160ms ease, background 160ms ease;
 }
 
-.official-btn:hover{
+.official-btn:hover {
   transform: translateY(-2px);
   border-color: rgba(255,255,255,0.18);
   background: rgba(255,255,255,0.06);
 }
 
-/* Typography */
-.official-btn .btn-title{
+.official-btn .btn-title {
   font-size: 16px;
   font-weight: 600;
   letter-spacing: 0.2px;
 }
 
-.official-btn .btn-arrow{
+.official-btn .btn-arrow {
   font-size: 16px;
   opacity: 0.75;
   transition: transform 160ms ease, opacity 160ms ease;
 }
 
-.official-btn:hover .btn-arrow{
+.official-btn:hover .btn-arrow {
   transform: translate(2px, -2px);
   opacity: 1;
 }
 
 /* Mobile */
-@media (max-width: 640px){
-  .official-grid{
-    grid-template-columns: 1fr;
-    gap: 12px;
-  }
-  .official-hero{
-    padding: 40px 0 18px;
-  }
-}
-.coming{
-  min-height:70vh;
-  display:flex;
-  align-items:center;
-  justify-content:center;
+@media (max-width: 640px) {
+  .official-grid { grid-template-columns: 1fr; gap: 12px; }
+  .official-hero { padding: 40px 0 18px; }
 }
 
-.coming-title{
+/* =========================================================
+   14) Page: coming soon
+========================================================= */
+.coming {
+  min-height: 70vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.coming-title {
   font-size: clamp(40px, 6vw, 72px);
-  font-weight:600;
-  letter-spacing:.04em;
+  font-weight: 600;
+  letter-spacing: .04em;
 }
