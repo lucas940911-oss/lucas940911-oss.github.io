@@ -907,3 +907,118 @@ body.searching #recently-section * { pointer-events: none; }
     );
   pointer-events:none;
 }
+
+/* =========================================================
+   HOME — Spacing System (Premium Rhythm)
+   貼到 style.css 最底部，專管 index hero 的節奏與比例
+========================================================= */
+
+/* 1) Rhythm Tokens（只用在首頁，不影響其他頁） */
+:root{
+  --h-pad-top: 96px;
+  --h-pad-bot: 72px;
+
+  --sp-1: 10px;  /* 小間距 */
+  --sp-2: 16px;  /* logo → tagline */
+  --sp-3: 24px;  /* tagline → buttons */
+  --sp-4: 14px;  /* buttons gap */
+
+  --cta-min: 220px;
+  --cta-max: 320px;
+}
+
+/* 2) Hero 本體：乾淨置中 + 上下節奏 */
+.hero{
+  min-height: 92vh;
+  padding: var(--h-pad-top) 20px var(--h-pad-bot);
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+}
+
+/* 3) 如果你有 kicker（沒有也不會壞） */
+.kicker{
+  margin: 0 0 var(--sp-1) 0;
+}
+
+/* 4) Logo：下面留 sp-2，確保不擠也不鬆 */
+.logo{
+  margin: 0 0 var(--sp-2) 0;
+}
+
+/* 5) Tagline：行長限制 + 留 sp-3 */
+.tagline{
+  margin: 0 0 var(--sp-3) 0;
+  max-width: 40ch;
+}
+
+/* 6) CTA 容器：固定入口寬度策略，不要滿版橫條 */
+.hero-actions{
+  margin: 0;
+  width: 100%;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap: var(--sp-4);
+}
+
+/* 7) CTA 寬度：像入口物件，不是橫條 */
+.btn-hero{
+  width: auto;
+  min-width: var(--cta-min);
+  max-width: var(--cta-max);
+}
+
+/* =========================================================
+   Breakpoints：同一套節奏縮放
+========================================================= */
+
+/* 大桌機：稍微更鬆，避免太擠 */
+@media (min-width: 1200px){
+  :root{
+    --h-pad-top: 108px;
+    --h-pad-bot: 84px;
+    --sp-2: 18px;
+    --sp-3: 28px;
+    --cta-min: 240px;
+    --cta-max: 360px;
+  }
+}
+
+/* 平板：收斂 */
+@media (max-width: 820px){
+  :root{
+    --h-pad-top: 86px;
+    --h-pad-bot: 66px;
+    --sp-2: 16px;
+    --sp-3: 24px;
+    --cta-min: 220px;
+    --cta-max: 320px;
+  }
+  .tagline{ max-width: 30ch; }
+}
+
+/* 手機：更緊、更像品牌 landing（你截圖那種比例就會順） */
+@media (max-width: 600px){
+  :root{
+    --h-pad-top: 78px;
+    --h-pad-bot: 58px;
+    --sp-1: 10px;
+    --sp-2: 14px;
+    --sp-3: 20px;
+    --sp-4: 12px;
+    --cta-min: 200px;
+    --cta-max: 300px;
+  }
+  .tagline{ max-width: 26ch; }
+}
+
+/* 超小手機：確保不爆版 */
+@media (max-width: 360px){
+  :root{
+    --cta-min: 180px;
+    --cta-max: 92vw;
+  }
+}
