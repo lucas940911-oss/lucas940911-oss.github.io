@@ -13,6 +13,17 @@
   --text-main: #ffffff;
   --text-dim: #bbbbbb;
 
+  /* ✅ Brand tokens (新增：不影響舊變數) */
+  --brand: var(--primary-color);
+  --text-dim-2: rgba(255,255,255,0.78);
+  --text-faint: rgba(255,255,255,0.55);
+
+  --border-strong: 2px solid rgba(0,224,255,0.70);
+  --shadow-brand: 0 18px 58px rgba(0,224,255,0.14);
+
+  --ease: cubic-bezier(.2,.8,.2,1);
+  --t: 220ms;
+
   /* songs hero title system vars */
   --hero-title: clamp(2.0rem, 6.2vw, 4.2rem);
   --hero-line-height: 1.05;
@@ -37,6 +48,7 @@ body {
   color: var(--text-main);
   font-family: 'Helvetica Neue', Noto Sans TC, sans-serif;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   line-height: 1.6;
 }
 
@@ -117,81 +129,146 @@ img, video, iframe {
 }
 
 /* =========================
-   5) Hero (Home)
+   5) Hero (Home) — ✅質感升級但保持原 class
 ========================= */
 .hero {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 80vh;
+
+  /* ✅ 原本 80vh → 稍微提升 landing 感 */
+  min-height: 90vh;
+  height: auto;
+
   text-align: center;
-  padding: 0 20px;
+  padding: 78px 20px 64px;
+
+  /* ✅ 黑底層次（不花、但有材質） */
+  background:
+    radial-gradient(650px 340px at 55% 18%, rgba(0,224,255,0.12), transparent 62%),
+    radial-gradient(520px 280px at 18% 72%, rgba(255,255,255,0.06), transparent 66%),
+    linear-gradient(180deg, rgba(255,255,255,0.035), rgba(0,0,0,0) 42%),
+    #000;
+}
+
+/* ✅ Hero 與 footer 過渡，避免「突然掉」 */
+.hero::after{
+  content:"";
+  display:block;
+  height: 46px;
+  width: 100%;
+  margin-top: 56px;
+  background: linear-gradient(180deg, rgba(0,0,0,0), rgba(0,0,0,1));
+  opacity: 0.9;
 }
 
 .logo {
   font-family: Impact, sans-serif;
-  font-size: clamp(3rem, 10vw, 6rem);
+  font-size: clamp(2.6rem, 7vw, 5.2rem);
   margin: 0;
   color: #fff;
-  letter-spacing: 4px;
+
+  /* ✅ 更像品牌標誌：字距更乾淨 */
+  letter-spacing: 0.22em;
+
+  /* ✅ 柔光，不霓虹過頭 */
+  text-shadow:
+    0 0 18px rgba(0,224,255,0.22),
+    0 0 52px rgba(0,224,255,0.10);
 }
 
 .tagline {
-  margin: 20px 0 40px;
+  margin: 14px 0 28px;
   font-family: 'Roboto Condensed', sans-serif;
-  color: var(--text-dim);
-  font-size: 1.2rem;
-  letter-spacing: 2px;
+  color: var(--text-dim-2);
+  font-size: clamp(1.02rem, 2.1vw, 1.24rem);
+
+  /* ✅ 行長限制：質感關鍵 */
+  max-width: 44ch;
+  line-height: 1.65;
+
+  /* ✅ 字距別太大，否則看起來粗糙 */
+  letter-spacing: 0.02em;
 }
 
 @media (max-width: 600px) {
   .logo { font-size: 3rem; }
   .tagline {
-    font-size: 0.9rem;
+    font-size: 0.95rem;
     white-space: normal;
   }
 }
 
 /* =========================
-   6) Buttons (Global)
+   6) Buttons (Global) — ✅統一按鈕系統（解外框不一致）
 ========================= */
 .btn-hero, .btn {
+  /* ✅ 統一高度/視覺厚度 */
   padding: 12px 30px;
+
   background: transparent;
-  border: 2px solid var(--primary-color);
+
+  /* ⭐ 關鍵：永遠保留同厚度 border（透明也算） */
+  border: 2px solid rgba(0,224,255,0.70);
+
   color: var(--primary-color);
   text-decoration: none;
-  font-weight: bold;
+  font-weight: 800;
   border-radius: 50px;
-  transition: all 0.3s ease;
-  display: inline-block;
+
+  transition:
+    transform var(--t) var(--ease),
+    box-shadow var(--t) var(--ease),
+    background var(--t) var(--ease),
+    color var(--t) var(--ease),
+    border-color var(--t) var(--ease);
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   text-align: center;
+  transform: translateZ(0);
 }
 
 .btn-hero:hover, .btn:hover {
   background: var(--primary-color);
   color: #000;
-  box-shadow: 0 0 20px rgba(0, 224, 255, 0.5);
+  box-shadow: 0 0 20px rgba(0, 224, 255, 0.22);
+  transform: translateY(-2px);
 }
+
+.btn-hero:active, .btn:active {
+  transform: translateY(-1px);
+}
+
+/* ✅ Hero 兩顆按鈕排版 */
 .hero-actions{
   display:flex;
   flex-direction:column;
   gap:14px;
   align-items:center;
-  margin-top:18px;
+  margin-top:12px; /* 原本 18px → 更接近 tagline 節奏 */
 }
 
+/* ✅ Secondary：只改顏色/背景，不改 border 厚度（解不一致） */
 .btn-secondary{
   background: transparent;
-  border: 1px solid var(--primary-color);
+  border-color: rgba(0,224,255,0.70); /* 和主按鈕同粗 */
   color: var(--primary-color);
+  box-shadow: none;
 }
 
 .btn-secondary:hover{
   background: var(--primary-color);
   color:#000;
 }
+
+/* 手機：按鈕更像入口 */
+@media (max-width: 520px){
+  .btn-hero{ width: min(360px, 92vw); }
+}
+
 /* =========================
    7) Grid / Cards
 ========================= */
@@ -677,8 +754,8 @@ body.searching #recently-section * { pointer-events: none; }
 
 .official-btn .btn-arrow {
   font-size: 16px;
-  opacity: 0.85; /* 稍微亮一點，搭配主色 */
-  color: var(--primary-color); /* ✅ 箭頭：主色淺藍 */
+  opacity: 0.85;
+  color: var(--primary-color);
   transition: transform 160ms ease, opacity 160ms ease;
 }
 
@@ -707,19 +784,18 @@ body.searching #recently-section * { pointer-events: none; }
   font-size: clamp(40px, 6vw, 72px);
   font-weight: 600;
   letter-spacing: .04em;
-  line-height: 1.1; /* ✅ emoji 對齊更穩 */
+  line-height: 1.1;
 }
+
 /* =========================================================
    COMING TITLE — Blue White Hero (final, brand safe)
 ========================================================= */
-
 .coming-title{
   font-size: clamp(56px, 8vw, 110px);
   font-weight: 800;
   letter-spacing: .06em;
   text-align: center;
 
-  /* ⭐ 白 → 藍白漸層（關鍵） */
   background: linear-gradient(
     180deg,
     #ffffff 0%,
@@ -730,7 +806,6 @@ body.searching #recently-section * { pointer-events: none; }
   background-clip: text;
   color: transparent;
 
-  /* ⭐ 比你現在更明顯但不換色相 */
   text-shadow:
     0 0 18px rgba(0,224,255,0.28),
     0 0 60px rgba(0,224,255,0.18);
@@ -738,6 +813,7 @@ body.searching #recently-section * { pointer-events: none; }
   animation: comingGlowBlue 2.6s ease-in-out infinite;
   will-change: transform, text-shadow, filter;
 }
+
 @keyframes comingGlowBlue{
   0%,100%{
     transform: translateY(0);
@@ -758,6 +834,7 @@ body.searching #recently-section * { pointer-events: none; }
 @media (prefers-reduced-motion: reduce){
   .coming-title{ animation:none; }
 }
+
 .coming{
   position: relative;
 }
