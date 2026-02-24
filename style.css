@@ -203,7 +203,9 @@ img, video, iframe {
   /* 不要 glow（logo版不需要） */
   text-shadow:none;
 }
-
+.logo{
+  transform: translateY(1px);
+}
 /* =========================
    6) Buttons (Global) — ✅統一按鈕系統（解外框不一致）
 ========================= */
