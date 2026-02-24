@@ -724,3 +724,6 @@ body.searching #recently-section * { pointer-events: none; }
 @media (prefers-reduced-motion: reduce){
   .coming-title{ animation:none; }
 }
+.coming-title{
+  letter-spacing:.05em;
+}
