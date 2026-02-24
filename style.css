@@ -13,7 +13,7 @@
   --text-main: #ffffff;
   --text-dim: #bbbbbb;
 
-  /* songs hero title system vars (原本在下面 :root，合併到這裡) */
+  /* songs hero title system vars */
   --hero-title: clamp(2.0rem, 6.2vw, 4.2rem);
   --hero-line-height: 1.05;
   --hero-letter: 2px;
@@ -111,7 +111,7 @@ img, video, iframe {
 
 .nav-links a:hover { color: var(--primary-color); }
 
-/* 手機版：隱藏 navbar links（你原本就這樣） */
+/* 手機版：隱藏 navbar links */
 @media (max-width: 600px) {
   .nav-links { display: none; }
 }
@@ -596,9 +596,7 @@ body.searching .results-head { margin-top: 18px; }
 body.searching #recently-section * { pointer-events: none; }
 
 /* =========================================================
-   13) Page: official-accounts.html
-   ⚠️ 你原本 official 區塊寫了兩套，我保留「後面那套 Minimal」
-      因為 CSS 後者會覆蓋前者，你目前看到的也是這套效果
+   13) Page: official-accounts.html (Minimal)
 ========================================================= */
 
 /* Official Hero */
@@ -657,11 +655,13 @@ body.searching #recently-section * { pointer-events: none; }
   font-size: 16px;
   font-weight: 600;
   letter-spacing: 0.2px;
+  color: #fff; /* ✅ 平台名稱：白色 */
 }
 
 .official-btn .btn-arrow {
   font-size: 16px;
-  opacity: 0.75;
+  opacity: 0.85; /* 稍微亮一點，搭配主色 */
+  color: var(--primary-color); /* ✅ 箭頭：主色淺藍 */
   transition: transform 160ms ease, opacity 160ms ease;
 }
 
@@ -690,14 +690,5 @@ body.searching #recently-section * { pointer-events: none; }
   font-size: clamp(40px, 6vw, 72px);
   font-weight: 600;
   letter-spacing: .04em;
-}
-/* Official Accounts: button text color */
-.official-btn .btn-title{
-  color: var(--primary-color);
-}
-.official-btn .btn-title{
-  color: rgba(0,224,255,0.92);
-}
-.coming-title{
-  line-height: 1.1;
+  line-height: 1.1; /* ✅ emoji 對齊更穩 */
 }
