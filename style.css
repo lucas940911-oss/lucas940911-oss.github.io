@@ -691,3 +691,13 @@ body.searching #recently-section * { pointer-events: none; }
   font-weight: 600;
   letter-spacing: .04em;
 }
+/* Official Accounts: button text color */
+.official-btn .btn-title{
+  color: var(--primary-color);
+}
+.official-btn .btn-title{
+  color: rgba(0,224,255,0.92);
+}
+.coming-title{
+  line-height: 1.1;
+}
