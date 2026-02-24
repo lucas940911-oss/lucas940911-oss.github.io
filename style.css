@@ -693,37 +693,66 @@ body.searching #recently-section * { pointer-events: none; }
   line-height: 1.1; /* ✅ emoji 對齊更穩 */
 }
 /* =========================================================
-   COMING TITLE — Neon breathe (Label P style)
+   COMING TITLE — Hero version (strong but clean)
 ========================================================= */
 
 .coming-title{
-  text-shadow:
-    0 0 12px rgba(0,224,255,0.22),
-    0 0 28px rgba(0,224,255,0.14);
-  animation: comingGlow 2.4s ease-in-out infinite;
-  will-change: transform, text-shadow, filter;
-}
+  font-size: clamp(56px, 8vw, 110px); /* ⭐ 更大 */
+  font-weight: 800;
+  letter-spacing: .06em;
+  text-align: center;
 
-@keyframes comingGlow{
+  /* ⭐ 層級提升關鍵：漸層字 */
+  background: linear-gradient(
+    180deg,
+    #ffffff 0%,
+    #e8fcff 40%,
+    #bdf6ff 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+
+  /* ⭐ 霓虹光更強 */
+  text-shadow:
+    0 0 18px rgba(0,224,255,0.25),
+    0 0 48px rgba(0,224,255,0.16);
+
+  animation: comingGlowStrong 2.6s ease-in-out infinite;
+}
+@keyframes comingGlowStrong{
   0%,100%{
     transform: translateY(0);
     text-shadow:
-      0 0 10px rgba(0,224,255,0.18),
-      0 0 22px rgba(0,224,255,0.12);
+      0 0 14px rgba(0,224,255,0.18),
+      0 0 34px rgba(0,224,255,0.12);
     filter: brightness(1);
   }
   50%{
-    transform: translateY(-2px);
+    transform: translateY(-3px);
     text-shadow:
-      0 0 16px rgba(0,224,255,0.32),
-      0 0 40px rgba(0,224,255,0.18);
-    filter: brightness(1.06);
+      0 0 26px rgba(0,224,255,0.35),
+      0 0 70px rgba(0,224,255,0.22);
+    filter: brightness(1.12);
   }
 }
 
 @media (prefers-reduced-motion: reduce){
   .coming-title{ animation:none; }
 }
-.coming-title{
-  letter-spacing:.05em;
+.coming{
+  position: relative;
+}
+
+.coming::before{
+  content:"";
+  position:absolute;
+  inset:-120px -20px;
+  background:
+    radial-gradient(
+      600px 260px at 50% 50%,
+      rgba(0,224,255,0.12),
+      transparent 70%
+    );
+  pointer-events:none;
 }
