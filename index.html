@@ -51,44 +51,58 @@
 </footer>
   <!-- Ripple Script -->
   <script src="script.js"></script>
+ 
   <script>
 (() => {
   const logo = document.getElementById('dvd-logo');
   const bg = document.getElementById('dvd-bg');
   if (!logo || !bg) return;
 
-  const box = bg.parentElement; // ✅ hero 容器
+  const box = bg.parentElement; // hero
   if (!box) return;
 
-  // ✅ 速度：更慢
+  // ✅ 速度：慢一點
   let vx = 1.05;
   let vy = 0.90;
 
-  // ✅ 透明度：平常淡，撞牆變回較正常
-  const idleOpacity = 0.12;
-  const hitOpacity  = 0.28;
-  const hitMs = 120;
+  // ✅ 兩種狀態：淡(背景感) vs 正常(原本顏色)
+  const dimOpacity = 0.12;   // 平常淡
+  const fullOpacity = 1.0;   // 原本顏色（不透明）
+  let isDim = true;
 
-  logo.style.opacity = idleOpacity;
+  function applyOpacity() {
+    logo.style.opacity = isDim ? dimOpacity : fullOpacity;
+  }
 
+  applyOpacity();
+
+  // 初始位置
   let x = 40, y = 30;
 
+  // ✅ 取得 hero 實際尺寸（RWD 穩定）
   function bounds(){
-  const r = box.getBoundingClientRect();
-  return {
-    bw: r.width,
-    bh: r.height,
-    lw: logo.offsetWidth,
-    lh: logo.offsetHeight
+    const r = box.getBoundingClientRect();
+    return {
+      bw: r.width,
+      bh: r.height,
+      lw: logo.offsetWidth,
+      lh: logo.offsetHeight
     };
   }
 
-  function hitFlash(){
-    logo.style.opacity = hitOpacity;
-    clearTimeout(logo._hitT);
-    logo._hitT = setTimeout(() => {
-      logo.style.opacity = idleOpacity;
-    }, hitMs);
+  // ✅ 撞牆時切換透明度（維持到下一次撞牆）
+  function toggleOnHit(){
+    isDim = !isDim;
+    applyOpacity();
+  }
+
+  // 防止「同一幀同時撞到兩面牆」切換兩次又變回去
+  let hitCooldown = false;
+  function hitOncePerFrame(){
+    if (hitCooldown) return;
+    hitCooldown = true;
+    toggleOnHit();
+    requestAnimationFrame(() => { hitCooldown = false; });
   }
 
   function tick(){
@@ -97,18 +111,24 @@
     x += vx;
     y += vy;
 
-    if (x <= 0) { x = 0; vx *= -1; hitFlash(); }
-    if (y <= 0) { y = 0; vy *= -1; hitFlash(); }
-    if (x + lw >= bw) { x = bw - lw; vx *= -1; hitFlash(); }
-    if (y + lh >= bh) { y = bh - lh; vy *= -1; hitFlash(); }
+    let hit = false;
+
+    if (x <= 0) { x = 0; vx *= -1; hit = true; }
+    if (y <= 0) { y = 0; vy *= -1; hit = true; }
+    if (x + lw >= bw) { x = bw - lw; vx *= -1; hit = true; }
+    if (y + lh >= bh) { y = bh - lh; vy *= -1; hit = true; }
+
+    if (hit) hitOncePerFrame();
 
     logo.style.transform = `translate3d(${x}px, ${y}px, 0)`;
     requestAnimationFrame(tick);
   }
 
+  // 等圖片載入，避免尺寸為 0
   if (logo.complete) requestAnimationFrame(tick);
   else logo.addEventListener('load', () => requestAnimationFrame(tick), { once: true });
 
+  // resize 時把位置夾回範圍
   window.addEventListener('resize', () => {
     const {bw,bh,lw,lh} = bounds();
     x = Math.max(0, Math.min(x, bw - lw));
