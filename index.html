@@ -57,54 +57,59 @@
   const bg = document.getElementById('dvd-bg');
   if (!logo || !bg) return;
 
-  // 速度（px per frame-ish）。想慢一點就降到 1.2~1.8
-  let vx = 2.0;
-  let vy = 1.7;
+  const box = bg.parentElement; // ✅ hero 容器
+  if (!box) return;
 
-  // 初始位置隨機
-  let x = Math.random() * 200;
-  let y = Math.random() * 120;
+  // ✅ 速度：更慢
+  let vx = 1.05;
+  let vy = 0.90;
 
-  // 讓移動跟螢幕刷新率更平滑（用時間差）
-  let last = performance.now();
+  // ✅ 透明度：平常淡，撞牆變回較正常
+  const idleOpacity = 0.12;
+  const hitOpacity  = 0.28;
+  const hitMs = 120;
 
-  function bounds() {
-    const bw = bg.clientWidth;
-    const bh = bg.clientHeight;
-    const lw = logo.clientWidth;
-    const lh = logo.clientHeight;
-    return { bw, bh, lw, lh };
+  logo.style.opacity = idleOpacity;
+
+  let x = 40, y = 30;
+
+  function bounds(){
+    return {
+      bw: box.clientWidth,
+      bh: box.clientHeight,
+      lw: logo.clientWidth,
+      lh: logo.clientHeight
+    };
   }
 
-  function tick(now) {
-    const dt = Math.min(32, now - last) / 16.67; // 約當 60fps 的倍率
-    last = now;
+  function hitFlash(){
+    logo.style.opacity = hitOpacity;
+    clearTimeout(logo._hitT);
+    logo._hitT = setTimeout(() => {
+      logo.style.opacity = idleOpacity;
+    }, hitMs);
+  }
 
-    const { bw, bh, lw, lh } = bounds();
+  function tick(){
+    const {bw,bh,lw,lh} = bounds();
 
-    x += vx * dt;
-    y += vy * dt;
+    x += vx;
+    y += vy;
 
-    // 碰撞反彈
-    if (x <= 0) { x = 0; vx *= -1; }
-    if (y <= 0) { y = 0; vy *= -1; }
-    if (x + lw >= bw) { x = bw - lw; vx *= -1; }
-    if (y + lh >= bh) { y = bh - lh; vy *= -1; }
+    if (x <= 0) { x = 0; vx *= -1; hitFlash(); }
+    if (y <= 0) { y = 0; vy *= -1; hitFlash(); }
+    if (x + lw >= bw) { x = bw - lw; vx *= -1; hitFlash(); }
+    if (y + lh >= bh) { y = bh - lh; vy *= -1; hitFlash(); }
 
     logo.style.transform = `translate3d(${x}px, ${y}px, 0)`;
     requestAnimationFrame(tick);
   }
 
-  // 等圖片載入後再開始，避免 clientWidth=0
-  if (logo.complete) {
-    requestAnimationFrame(tick);
-  } else {
-    logo.addEventListener('load', () => requestAnimationFrame(tick), { once: true });
-  }
+  if (logo.complete) requestAnimationFrame(tick);
+  else logo.addEventListener('load', () => requestAnimationFrame(tick), { once: true });
 
-  // 視窗縮放時，避免 logo 跑出界：夾回邊界內
   window.addEventListener('resize', () => {
-    const { bw, bh, lw, lh } = bounds();
+    const {bw,bh,lw,lh} = bounds();
     x = Math.max(0, Math.min(x, bw - lw));
     y = Math.max(0, Math.min(y, bh - lh));
   });
