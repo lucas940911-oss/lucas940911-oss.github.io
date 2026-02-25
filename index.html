@@ -74,11 +74,12 @@
   let x = 40, y = 30;
 
   function bounds(){
-    return {
-      bw: box.clientWidth,
-      bh: box.clientHeight,
-      lw: logo.clientWidth,
-      lh: logo.clientHeight
+  const r = box.getBoundingClientRect();
+  return {
+    bw: r.width,
+    bh: r.height,
+    lw: logo.offsetWidth,
+    lh: logo.offsetHeight
     };
   }
 
