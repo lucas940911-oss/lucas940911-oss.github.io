@@ -82,6 +82,28 @@ body {
   padding: clamp(40px, 8vw, 120px) 20px; /* ✅ RWD spacing 穩定 */
 }
 
+/* DVD bouncing only inside hero */
+#dvd-bg{
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.hero > *:not(#dvd-bg){
+  position: relative;
+  z-index: 2; /* ✅ LABEL P/按鈕都會蓋住 logo */
+}
+
+#dvd-logo{
+  position: absolute;
+  width: min(110px, 16vw);
+  height: auto;
+  opacity: .12;            /* ✅ 平常淡 */
+  will-change: transform, opacity;
+}
+
 .logo {
   font-family: Impact, sans-serif;
   font-size: clamp(3rem, 10vw, 6rem);
@@ -116,6 +138,19 @@ body {
   background: var(--primary-color);
   color: #000;
   box-shadow: 0 0 20px rgba(0, 224, 255, 0.5);
+}
+
+/* ✅ 只在首頁 hero：按鈕有不透明底色，完整遮住底下 DVD logo（不影響其他頁） */
+.hero .btn-hero,
+.hero .btn {
+  background: rgba(0,0,0,0.92);
+  box-shadow: 0 10px 28px rgba(0,0,0,0.38);
+}
+
+/* 保險：按鈕區塊更高一層（即使未來你改其他 z-index 也穩） */
+.hero-actions{
+  position: relative;
+  z-index: 3;
 }
 
 /* --- 網格佈局 Grid --- */
@@ -523,8 +558,12 @@ img, video, iframe { max-width: 100%; height: auto; }
   .grid { grid-template-columns: 1fr; }
 }
 
-/* 更好的鍵盤 focus（不影響滑鼠外觀） */
-:focus-visible {
+/* ✅ 修正「紅框」：只對互動元素顯示 focus 外框（不會讓 hero/背景出框） */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
   outline: 2px solid rgba(0,224,255,0.65);
   outline-offset: 3px;
 }
@@ -627,7 +666,6 @@ img, video, iframe { max-width: 100%; height: auto; }
 /* =========================
    SEARCH STATE (songs.html)
    搜尋時：Recently 真正消失 + 結果區塊上移（消除留白）
-   ✅ 只用 display:none，避免你遇到「變暗不能按但還佔位」的狀況
 ========================= */
 
 /* 搜尋中：整段 Recently 不佔位 */
@@ -649,6 +687,7 @@ body.searching .results-head{
 body.searching #recently-section *{
   pointer-events: none;
 }
+
 /* ========================= 官方帳號頁（品牌版） ========================= */
 .official { max-width: 820px; margin: 0 auto; padding-bottom: 30px; }
 
@@ -749,6 +788,7 @@ body.searching #recently-section *{
   font-weight: 650;
   line-height: 1.7;
 }
+
 .official-avatar-img{
   width: 56px;
   height: 56px;
@@ -756,6 +796,7 @@ body.searching #recently-section *{
   display: block;
   margin: 0 auto 14px;
 }
+
 /* =========================
    Official Accounts (Minimal)
    ========================= */
@@ -838,31 +879,4 @@ body.searching #recently-section *{
   .official-hero{
     padding: 40px 0 18px;
   }
-}
-/* DVD bouncing only inside hero */
-.hero{
-  position: relative;
-  overflow: hidden;
-  background: #000;
-}
-
-#dvd-bg{
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  overflow: hidden;
-}
-
-.hero > *:not(#dvd-bg){
-  position: relative;
-  z-index: 2; /* ✅ LABEL P 文字一定會蓋住 logo */
-}
-
-#dvd-logo{
-  position: absolute;
-  width: min(110px, 16vw);
-  height: auto;
-  opacity: .12;            /* ✅ 平常淡 */
-  will-change: transform, opacity;
 }
