@@ -866,6 +866,3 @@ body.searching #recently-section *{
   opacity: .12;            /* ✅ 平常淡 */
   will-change: transform, opacity;
 }
-
-.hero{ outline: 2px solid red; }
-#dvd-bg{ outline: 2px solid lime; }
