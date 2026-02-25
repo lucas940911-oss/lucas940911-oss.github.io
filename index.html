@@ -11,7 +11,7 @@
 <body>
   <!-- DVD bouncing logo background -->
 <div id="dvd-bg" aria-hidden="true">
-  <img id="dvd-logo" src="/assets/logo.png" alt="" />
+  <img id="dvd-logo" src="/images/logo.png" alt="" />
 </div>
   <!-- Hero -->
   <section class="hero">
@@ -51,5 +51,64 @@
 </footer>
   <!-- Ripple Script -->
   <script src="script.js"></script>
+  <script>
+(() => {
+  const logo = document.getElementById('dvd-logo');
+  const bg = document.getElementById('dvd-bg');
+  if (!logo || !bg) return;
+
+  // 速度（px per frame-ish）。想慢一點就降到 1.2~1.8
+  let vx = 2.0;
+  let vy = 1.7;
+
+  // 初始位置隨機
+  let x = Math.random() * 200;
+  let y = Math.random() * 120;
+
+  // 讓移動跟螢幕刷新率更平滑（用時間差）
+  let last = performance.now();
+
+  function bounds() {
+    const bw = bg.clientWidth;
+    const bh = bg.clientHeight;
+    const lw = logo.clientWidth;
+    const lh = logo.clientHeight;
+    return { bw, bh, lw, lh };
+  }
+
+  function tick(now) {
+    const dt = Math.min(32, now - last) / 16.67; // 約當 60fps 的倍率
+    last = now;
+
+    const { bw, bh, lw, lh } = bounds();
+
+    x += vx * dt;
+    y += vy * dt;
+
+    // 碰撞反彈
+    if (x <= 0) { x = 0; vx *= -1; }
+    if (y <= 0) { y = 0; vy *= -1; }
+    if (x + lw >= bw) { x = bw - lw; vx *= -1; }
+    if (y + lh >= bh) { y = bh - lh; vy *= -1; }
+
+    logo.style.transform = `translate3d(${x}px, ${y}px, 0)`;
+    requestAnimationFrame(tick);
+  }
+
+  // 等圖片載入後再開始，避免 clientWidth=0
+  if (logo.complete) {
+    requestAnimationFrame(tick);
+  } else {
+    logo.addEventListener('load', () => requestAnimationFrame(tick), { once: true });
+  }
+
+  // 視窗縮放時，避免 logo 跑出界：夾回邊界內
+  window.addEventListener('resize', () => {
+    const { bw, bh, lw, lh } = bounds();
+    x = Math.max(0, Math.min(x, bw - lw));
+    y = Math.max(0, Math.min(y, bh - lh));
+  });
+})();
+</script>
 </body>
 </html>
