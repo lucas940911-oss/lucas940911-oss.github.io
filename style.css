@@ -835,3 +835,27 @@ body.searching #recently-section *{
     padding: 40px 0 18px;
   }
 }
+/* DVD background layer */
+#dvd-bg{
+  position: fixed;
+  inset: 0;
+  z-index: 0;              /* 讓它在最底層 */
+  pointer-events: none;    /* 不擋你任何按鈕/連結 */
+  overflow: hidden;
+}
+
+/* 你的主要內容容器記得要在上層（如果你已有 z-index 就不用動）
+   如果你目前內容被蓋住，就加這段到你的主容器（例如 main / .page / .container） */
+main, .page, .container, .content {
+  position: relative;
+  z-index: 1;
+}
+
+#dvd-logo{
+  position: absolute;
+  width: min(120px, 18vw); /* ✅ Logo 不要太大：桌機約 120px，上限會跟著縮 */
+  height: auto;
+  opacity: 0.18;           /* ✅ 更像背景：不搶視覺 */
+  filter: drop-shadow(0 0 10px rgba(0,0,0,.35));
+  will-change: transform;
+}
