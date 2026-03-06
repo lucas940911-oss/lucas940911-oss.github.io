@@ -5,28 +5,28 @@
 
   <!-- 外框 -->
   <rect
-    x="40"
-    y="40"
-    width="2920"
-    height="920"
+    x="30"
+    y="30"
+    width="2940"
+    height="940"
     fill="none"
     stroke="#1FD3E6"
-    stroke-width="40"
+    stroke-width="35"
   />
 
-  <!-- 文字 -->
-  <text
-    x="1500"
-    y="520"
-    text-anchor="middle"
-    dominant-baseline="middle"
-    font-family="Impact, Arial Black, sans-serif"
-    font-weight="900"
-    font-size="720"
-    fill="#1FD3E6"
-    letter-spacing="12"
-  >
-    LABEL P
-  </text>
+  <!-- LOGO -->
+  <g transform="translate(1500 500) scale(0.92 1)">
+    <text
+      text-anchor="middle"
+      dominant-baseline="middle"
+      font-family="Impact, Arial Black, sans-serif"
+      font-weight="900"
+      font-size="900"
+      fill="#1FD3E6"
+      letter-spacing="8"
+    >
+      LABEL P
+    </text>
+  </g>
 
 </svg>
