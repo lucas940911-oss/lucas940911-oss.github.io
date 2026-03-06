@@ -15,13 +15,13 @@
   />
 
   <!-- LOGO -->
-  <g transform="translate(1500 575) scale(0.92 1)">
+  <g transform="translate(1500 590) scale(0.92 1)">
     <text
       text-anchor="middle"
       dominant-baseline="middle"
       font-family="Impact, Arial Black, sans-serif"
       font-weight="900"
-      font-size="880"
+      font-size="940"
       fill="#1FD3E6"
       letter-spacing="7"
     >
