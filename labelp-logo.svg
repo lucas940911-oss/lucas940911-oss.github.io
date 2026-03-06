@@ -1,7 +1,7 @@
 <svg width="3000" height="900" viewBox="0 0 3000 900" xmlns="http://www.w3.org/2000/svg">
 
   <!-- 背景 -->
-  <rect width="100%" height="100%" fill="White"/>
+  <rect width="100%" height="100%" fill="black"/>
 
   <!-- 外框 -->
   <rect x="40" y="40" width="2920" height="820"
@@ -10,12 +10,15 @@
         stroke-width="30"/>
 
   <!-- 文字 -->
-  <text x="1500" y="580"
+  <text
+        x="1500"
+        y="450"
         font-family="Impact, Arial Black, sans-serif"
-        font-size="500"
+        font-size="480"
         text-anchor="middle"
+        dominant-baseline="middle"
         fill="#00E0FF"
-        letter-spacing="20">
+        letter-spacing="25">
 
         LABEL P
 
