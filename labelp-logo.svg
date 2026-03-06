@@ -15,15 +15,15 @@
   />
 
   <!-- LOGO -->
-  <g transform="translate(1500 500) scale(0.92 1)">
+  <g transform="translate(1500 530) scale(0.93 1)">
     <text
       text-anchor="middle"
       dominant-baseline="middle"
       font-family="Impact, Arial Black, sans-serif"
       font-weight="900"
-      font-size="940"
+      font-size="950"
       fill="#1FD3E6"
-      letter-spacing="7"
+      letter-spacing="6"
     >
       LABEL P
     </text>
